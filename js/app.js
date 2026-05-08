@@ -18,12 +18,22 @@
       });
     });
 
+    document.querySelectorAll('.jwt-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.jwt-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        document.querySelectorAll('.jwt-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById('jwt-' + tab.dataset.jwtTab + '-panel').classList.add('active');
+      });
+    });
+
     document.addEventListener('keydown', (e) => {
       if (e.altKey) {
         const keyMap = {
-          '1': 'jwt', '2': 'idgen', '3': 'json', '4': 'regex',
-          '5': 'pomodoro', '6': 'diff', '7': 'hash', '8': 'base64',
-          '9': 'url', '0': 'uuid'
+          '1': 'jwt', '2': 'json', '3': 'base64', '4': 'url',
+          '5': 'idgen', '6': 'uuid', '7': 'password', '8': 'lorem',
+          '9': 'hash', '0': 'timestamp'
         };
         if (keyMap[e.key]) {
           e.preventDefault();

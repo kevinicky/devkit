@@ -2,7 +2,7 @@
   'use strict';
 
   const LOCK_KEY = 'devkit-tab-lock';
-  const HEARTBEAT_KEY = 'devkit-tab-heartbeat';
+  const TAB_ID_KEY = 'devkit-tab-id';
   const CHANNEL_NAME = 'devkit-tab-channel';
   const HEARTBEAT_INTERVAL = 2000;
   const LOCK_TIMEOUT = 5000;
@@ -33,22 +33,8 @@
 
   function clearLock() {
     try {
-      const current = getLock();
-      if (current && current.id === tabId) {
-        localStorage.removeItem(LOCK_KEY);
-      }
+      localStorage.removeItem(LOCK_KEY);
     } catch (e) {}
-  }
-
-  function updateHeartbeat() {
-    try {
-      localStorage.setItem(HEARTBEAT_KEY, JSON.stringify({ id: tabId, time: Date.now() }));
-    } catch (e) {}
-  }
-
-  function isLockValid(lock) {
-    if (!lock) return false;
-    return (Date.now() - lock.time) < LOCK_TIMEOUT;
   }
 
   function blockTab() {
@@ -66,11 +52,9 @@
   }
 
   function startHeartbeat() {
-    updateHeartbeat();
     heartbeatInterval = setInterval(() => {
-      if (!isBlocked) {
+      if (!isBlocked && tabId) {
         setLock(tabId);
-        updateHeartbeat();
       }
     }, HEARTBEAT_INTERVAL);
   }
@@ -82,34 +66,58 @@
     }
   }
 
-  function acquireLock() {
+  function claimLock() {
     tabId = generateId();
+    sessionStorage.setItem(TAB_ID_KEY, tabId);
+    setLock(tabId);
+    startHeartbeat();
+
+    if (channel) {
+      channel.postMessage({ type: 'lock', tabId: tabId });
+    }
+
+    showApp();
+  }
+
+  function isSameTabRefresh() {
+    const existingTabId = sessionStorage.getItem(TAB_ID_KEY);
+    if (existingTabId) {
+      const lock = getLock();
+      if (lock && lock.id === existingTabId) {
+        tabId = existingTabId;
+        setLock(tabId);
+        startHeartbeat();
+        showApp();
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function takeOver() {
+    clearLock();
+    if (channel) {
+      channel.postMessage({ type: 'unlock', tabId: 'force' });
+    }
+    setTimeout(() => claimLock(), 300);
+  }
+
+  function init() {
+    document.getElementById('take-over-btn').addEventListener('click', takeOver);
     channel = new BroadcastChannel(CHANNEL_NAME);
+
+    if (isSameTabRefresh()) return;
 
     const existingLock = getLock();
 
-    if (existingLock && isLockValid(existingLock)) {
-      channel.postMessage({ type: 'ping', tabId: existingLock.id });
-
-      setTimeout(() => {
-        const currentLock = getLock();
-        if (currentLock && currentLock.id === existingLock.id) {
-          blockTab();
-        } else {
-          claimLock();
-        }
-      }, 300);
+    if (existingLock && (Date.now() - existingLock.time) < LOCK_TIMEOUT) {
+      blockTab();
     } else {
       claimLock();
     }
 
     channel.onmessage = (e) => {
       const data = e.data;
-
-      if (data.type === 'ping' && data.tabId === tabId) {
-        setLock(tabId);
-        updateHeartbeat();
-      }
 
       if (data.type === 'lock' && data.tabId !== tabId) {
         const currentLock = getLock();
@@ -118,7 +126,7 @@
         }
       }
 
-      if (data.type === 'unlock' && data.tabId !== tabId) {
+      if (data.type === 'unlock') {
         const currentLock = getLock();
         if (currentLock && currentLock.id === data.tabId) {
           setTimeout(() => {
@@ -132,32 +140,6 @@
         }
       }
     };
-  }
-
-  function claimLock() {
-    tabId = generateId();
-    setLock(tabId);
-    updateHeartbeat();
-    startHeartbeat();
-
-    if (channel) {
-      channel.postMessage({ type: 'lock', tabId: tabId });
-    }
-
-    showApp();
-  }
-
-  function takeOver() {
-    const currentLock = getLock();
-    if (currentLock && channel) {
-      channel.postMessage({ type: 'unlock', tabId: currentLock.id });
-    }
-    localStorage.removeItem(LOCK_KEY);
-    setTimeout(() => claimLock(), 400);
-  }
-
-  function init() {
-    document.getElementById('take-over-btn').addEventListener('click', takeOver);
 
     window.addEventListener('storage', (e) => {
       if (e.key === LOCK_KEY) {
@@ -166,24 +148,16 @@
           blockTab();
         }
       }
-      if (e.key === HEARTBEAT_KEY && isBlocked) {
-        const hb = JSON.parse(e.newValue || '{}');
-        if (hb.id !== tabId && isLockValid(hb)) {
-          blockTab();
-        }
-      }
     });
 
     window.addEventListener('beforeunload', () => {
-      if (!isBlocked) {
+      if (!isBlocked && tabId) {
         clearLock();
         if (channel) {
           channel.postMessage({ type: 'unlock', tabId: tabId });
         }
       }
     });
-
-    acquireLock();
   }
 
   if (document.readyState === 'loading') {

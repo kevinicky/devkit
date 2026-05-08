@@ -23,26 +23,40 @@
         <h1>devkit</h1>
       </div>
       <nav id="main-nav">
-        <button class="nav-btn active" data-tool="jwt">JWT</button>
-        <button class="nav-btn" data-tool="idgen">ID Gen</button>
-        <button class="nav-btn" data-tool="json">JSON</button>
-        <button class="nav-btn" data-tool="regex">Regex</button>
-        <button class="nav-btn" data-tool="pomodoro">Pomodoro</button>
-        <button class="nav-btn" data-tool="diff">Diff</button>
-        <button class="nav-btn" data-tool="hash">Hash</button>
-        <button class="nav-btn" data-tool="base64">Base64</button>
-        <button class="nav-btn" data-tool="url">URL</button>
-        <button class="nav-btn" data-tool="uuid">UUID</button>
-        <button class="nav-btn" data-tool="timestamp">Time</button>
-        <button class="nav-btn" data-tool="color">Color</button>
-        <button class="nav-btn" data-tool="markdown">MD</button>
-        <button class="nav-btn" data-tool="sql">SQL</button>
-        <button class="nav-btn" data-tool="cron">Cron</button>
-        <button class="nav-btn" data-tool="jwtgen">JWT+</button>
-        <button class="nav-btn" data-tool="notes">Notes</button>
-        <button class="nav-btn" data-tool="unit">Unit</button>
-        <button class="nav-btn" data-tool="lorem">Lorem</button>
-        <button class="nav-btn" data-tool="password">Pass</button>
+        <div class="nav-group">
+          <span class="nav-group-label">Encode</span>
+          <button class="nav-btn active" data-tool="jwt">JWT</button>
+          <button class="nav-btn" data-tool="json">JSON</button>
+          <button class="nav-btn" data-tool="base64">Base64</button>
+          <button class="nav-btn" data-tool="url">URL</button>
+        </div>
+        <div class="nav-group">
+          <span class="nav-group-label">Generate</span>
+          <button class="nav-btn" data-tool="idgen">ID</button>
+          <button class="nav-btn" data-tool="uuid">UUID</button>
+          <button class="nav-btn" data-tool="password">Pass</button>
+          <button class="nav-btn" data-tool="lorem">Lorem</button>
+        </div>
+        <div class="nav-group">
+          <span class="nav-group-label">Convert</span>
+          <button class="nav-btn" data-tool="hash">Hash</button>
+          <button class="nav-btn" data-tool="timestamp">Time</button>
+          <button class="nav-btn" data-tool="color">Color</button>
+          <button class="nav-btn" data-tool="unit">Unit</button>
+        </div>
+        <div class="nav-group">
+          <span class="nav-group-label">Dev</span>
+          <button class="nav-btn" data-tool="regex">Regex</button>
+          <button class="nav-btn" data-tool="sql">SQL</button>
+          <button class="nav-btn" data-tool="cron">Cron</button>
+          <button class="nav-btn" data-tool="diff">Diff</button>
+        </div>
+        <div class="nav-group">
+          <span class="nav-group-label">Productivity</span>
+          <button class="nav-btn" data-tool="pomodoro">Pomodoro</button>
+          <button class="nav-btn" data-tool="markdown">MD</button>
+          <button class="nav-btn" data-tool="notes">Notes</button>
+        </div>
       </nav>
       <div class="security-badge">
         <span class="badge-icon">🔒</span>
@@ -52,26 +66,57 @@
 
     <main>
       <section id="tool-jwt" class="tool active">
-        <h2>JWT Decoder</h2>
-        <div class="tool-layout">
-          <div class="input-section">
-            <label for="jwt-input">Paste JWT Token</label>
-            <textarea id="jwt-input" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." spellcheck="false"></textarea>
+        <h2>JWT Tools</h2>
+        <div class="jwt-tabs">
+          <button class="jwt-tab active" data-jwt-tab="decode">Decode</button>
+          <button class="jwt-tab" data-jwt-tab="generate">Generate</button>
+        </div>
+        <div id="jwt-decode-panel" class="jwt-panel active">
+          <div class="tool-layout">
+            <div class="input-section">
+              <label for="jwt-input">Paste JWT Token</label>
+              <textarea id="jwt-input" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." spellcheck="false"></textarea>
+            </div>
+            <div class="output-section">
+              <div class="output-group">
+                <label>Header</label>
+                <pre id="jwt-header" class="output-box"><span class="placeholder">Header will appear here</span></pre>
+              </div>
+              <div class="output-group">
+                <label>Payload</label>
+                <pre id="jwt-payload" class="output-box"><span class="placeholder">Payload will appear here</span></pre>
+              </div>
+              <div class="output-group">
+                <label>Signature Status</label>
+                <div id="jwt-signature" class="output-box"><span class="placeholder">Signature verification status</span></div>
+              </div>
+            </div>
           </div>
-          <div class="output-section">
-            <div class="output-group">
-              <label>Header</label>
-              <pre id="jwt-header" class="output-box"><span class="placeholder">Header will appear here</span></pre>
+        </div>
+        <div id="jwt-generate-panel" class="jwt-panel">
+          <div class="jwtgen-container">
+            <div class="jwtgen-section">
+              <label>Header (JSON)</label>
+              <textarea id="jwtgen-header" placeholder='{"alg": "HS256", "typ": "JWT"}' spellcheck="false">{"alg": "HS256", "typ": "JWT"}</textarea>
             </div>
-            <div class="output-group">
-              <label>Payload</label>
-              <pre id="jwt-payload" class="output-box"><span class="placeholder">Payload will appear here</span></pre>
+            <div class="jwtgen-section">
+              <label>Payload (JSON)</label>
+              <textarea id="jwtgen-payload" placeholder='{"sub": "1234567890", "name": "John Doe"}' spellcheck="false">{"sub": "1234567890", "name": "John Doe", "iat": 1700000000}</textarea>
             </div>
-            <div class="output-group">
-              <label>Signature Status</label>
-              <div id="jwt-signature" class="output-box"><span class="placeholder">Signature verification status</span></div>
+            <div class="jwtgen-section">
+              <label>Secret</label>
+              <input type="text" id="jwtgen-secret" placeholder="your-secret-key" value="your-256-bit-secret">
+            </div>
+            <div class="jwtgen-controls">
+              <button id="jwtgen-generate" class="btn-primary">Generate Token</button>
+              <button id="jwtgen-copy" class="btn-secondary">Copy Token</button>
+            </div>
+            <div class="jwtgen-output">
+              <label>Generated Token</label>
+              <pre id="jwtgen-token" class="output-box"><span class="placeholder">Token will appear here</span></pre>
             </div>
           </div>
+          <div id="jwtgen-error" class="error-msg hidden"></div>
         </div>
       </section>
 
@@ -209,13 +254,6 @@
           <textarea id="hash-input" placeholder="Enter text to hash..." spellcheck="false"></textarea>
         </div>
         <div class="hash-results">
-          <div class="hash-result-item">
-            <label>MD5</label>
-            <div class="hash-output-row">
-              <code id="hash-md5" class="hash-value">-</code>
-              <button class="btn-copy-hash btn-secondary" data-hash="md5">Copy</button>
-            </div>
-          </div>
           <div class="hash-result-item">
             <label>SHA-1</label>
             <div class="hash-output-row">
@@ -412,33 +450,6 @@
         </div>
       </section>
 
-      <section id="tool-jwtgen" class="tool">
-        <h2>JWT Generator</h2>
-        <div class="jwtgen-container">
-          <div class="jwtgen-section">
-            <label>Header (JSON)</label>
-            <textarea id="jwtgen-header" placeholder='{"alg": "HS256", "typ": "JWT"}' spellcheck="false">{"alg": "HS256", "typ": "JWT"}</textarea>
-          </div>
-          <div class="jwtgen-section">
-            <label>Payload (JSON)</label>
-            <textarea id="jwtgen-payload" placeholder='{"sub": "1234567890", "name": "John Doe"}' spellcheck="false">{"sub": "1234567890", "name": "John Doe", "iat": 1700000000}</textarea>
-          </div>
-          <div class="jwtgen-section">
-            <label>Secret</label>
-            <input type="text" id="jwtgen-secret" placeholder="your-secret-key" value="your-256-bit-secret">
-          </div>
-          <div class="jwtgen-controls">
-            <button id="jwtgen-generate" class="btn-primary">Generate Token</button>
-            <button id="jwtgen-copy" class="btn-secondary">Copy Token</button>
-          </div>
-          <div class="jwtgen-output">
-            <label>Generated Token</label>
-            <pre id="jwtgen-token" class="output-box"><span class="placeholder">Token will appear here</span></pre>
-          </div>
-        </div>
-        <div id="jwtgen-error" class="error-msg hidden"></div>
-      </section>
-
       <section id="tool-notes" class="tool">
         <h2>Scratchpad</h2>
         <div class="notes-container">
@@ -552,6 +563,7 @@
 
   <script src="js/security.js"></script>
   <script src="js/jwt.js"></script>
+  <script src="js/jwt-generator.js"></script>
   <script src="js/id-generator.js"></script>
   <script src="js/json-tools.js"></script>
   <script src="js/regex-tester.js"></script>
@@ -566,7 +578,6 @@
   <script src="js/markdown-preview.js"></script>
   <script src="js/sql-formatter.js"></script>
   <script src="js/cron-parser.js"></script>
-  <script src="js/jwt-generator.js"></script>
   <script src="js/notes-scratchpad.js"></script>
   <script src="js/unit-converter.js"></script>
   <script src="js/lorem-generator.js"></script>
