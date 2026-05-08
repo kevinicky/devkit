@@ -2,13 +2,47 @@
   'use strict';
 
   function init() {
-    const toolSelect = document.getElementById('tool-select');
+    const dropdowns = document.querySelectorAll('.nav-dropdown');
+    const dropdownBtns = document.querySelectorAll('.nav-dropdown-btn');
+    const dropdownItems = document.querySelectorAll('.nav-dropdown-item');
 
-    toolSelect.addEventListener('change', () => {
-      const toolId = toolSelect.value;
-      document.querySelectorAll('.tool').forEach(t => t.classList.remove('active'));
-      const target = document.getElementById('tool-' + toolId);
-      if (target) target.classList.add('active');
+    dropdownBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const dropdown = btn.closest('.nav-dropdown');
+        const isOpen = dropdown.classList.contains('open');
+
+        dropdowns.forEach(d => d.classList.remove('open'));
+
+        if (!isOpen) {
+          dropdown.classList.add('open');
+        }
+      });
+    });
+
+    dropdownItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const toolId = item.dataset.tool;
+
+        dropdownItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+
+        document.querySelectorAll('.tool').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById('tool-' + toolId);
+        if (target) target.classList.add('active');
+
+        dropdowns.forEach(d => d.classList.remove('open'));
+
+        try {
+          sessionStorage.setItem('dk-active-tool', toolId);
+        } catch (e) {}
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.nav-dropdown')) {
+        dropdowns.forEach(d => d.classList.remove('open'));
+      }
     });
 
     document.querySelectorAll('.jwt-tab').forEach(tab => {
@@ -30,8 +64,8 @@
         };
         if (keyMap[e.key]) {
           e.preventDefault();
-          toolSelect.value = keyMap[e.key];
-          toolSelect.dispatchEvent(new Event('change'));
+          const item = document.querySelector('.nav-dropdown-item[data-tool="' + keyMap[e.key] + '"]');
+          if (item) item.click();
         }
       }
     });

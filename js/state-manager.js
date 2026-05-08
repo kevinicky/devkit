@@ -45,13 +45,9 @@
 
     const activeTool = load('active-tool');
     if (activeTool) {
-      const btn = document.querySelector('[data-tool="' + activeTool + '"]');
-      if (btn) {
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.querySelectorAll('.tool').forEach(t => t.classList.remove('active'));
-        const target = document.getElementById('tool-' + activeTool);
-        if (target) target.classList.add('active');
+      const item = document.querySelector('.nav-dropdown-item[data-tool="' + activeTool + '"]');
+      if (item) {
+        item.click();
       }
     }
   }
@@ -65,21 +61,9 @@
       }
     });
 
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-      btn.addEventListener('click', () => save('active-tool', btn.dataset.tool));
+    document.querySelectorAll('.nav-dropdown-item').forEach(item => {
+      item.addEventListener('click', () => save('active-tool', item.dataset.tool));
     });
-
-    const toolSelect = document.getElementById('tool-select');
-    if (toolSelect) {
-      toolSelect.addEventListener('change', () => {
-        const val = toolSelect.value;
-        if (val) {
-          const btn = document.querySelector('[data-tool="' + val + '"]');
-          if (btn) btn.click();
-          save('active-tool', val);
-        }
-      });
-    }
   }
 
   function init() {

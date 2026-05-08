@@ -23,38 +23,51 @@
         <h1>devkit</h1>
       </div>
       <nav id="main-nav">
-        <select id="tool-select" class="tool-select">
-          <optgroup label="Encode">
-            <option value="jwt">JWT</option>
-            <option value="json">JSON Prettify</option>
-            <option value="jsonenc">JSON Encode</option>
-            <option value="base64">Base64</option>
-            <option value="url">URL</option>
-          </optgroup>
-          <optgroup label="Generate">
-            <option value="idgen">ID Generator</option>
-            <option value="uuid">UUID</option>
-            <option value="password">Password</option>
-            <option value="lorem">Lorem Ipsum</option>
-          </optgroup>
-          <optgroup label="Convert">
-            <option value="hash">Hash</option>
-            <option value="timestamp">Timestamp</option>
-            <option value="color">Color</option>
-            <option value="unit">Unit</option>
-          </optgroup>
-          <optgroup label="Dev">
-            <option value="regex">Regex</option>
-            <option value="sql">SQL</option>
-            <option value="cron">Cron</option>
-            <option value="diff">Diff</option>
-          </optgroup>
-          <optgroup label="Productivity">
-            <option value="pomodoro">Pomodoro</option>
-            <option value="markdown">Markdown</option>
-            <option value="notes">Scratchpad</option>
-          </optgroup>
-        </select>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-btn" data-dropdown="encode">Encode <span class="dropdown-arrow">▼</span></button>
+          <div class="nav-dropdown-menu" id="dropdown-encode">
+            <button class="nav-dropdown-item active" data-tool="jwt">JWT</button>
+            <button class="nav-dropdown-item" data-tool="json">JSON Prettify</button>
+            <button class="nav-dropdown-item" data-tool="jsonenc">JSON Encode</button>
+            <button class="nav-dropdown-item" data-tool="base64">Base64</button>
+            <button class="nav-dropdown-item" data-tool="url">URL</button>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-btn" data-dropdown="generate">Generate <span class="dropdown-arrow">▼</span></button>
+          <div class="nav-dropdown-menu" id="dropdown-generate">
+            <button class="nav-dropdown-item" data-tool="idgen">ID Generator</button>
+            <button class="nav-dropdown-item" data-tool="uuid">UUID</button>
+            <button class="nav-dropdown-item" data-tool="password">Password</button>
+            <button class="nav-dropdown-item" data-tool="lorem">Lorem Ipsum</button>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-btn" data-dropdown="convert">Convert <span class="dropdown-arrow">▼</span></button>
+          <div class="nav-dropdown-menu" id="dropdown-convert">
+            <button class="nav-dropdown-item" data-tool="hash">Hash</button>
+            <button class="nav-dropdown-item" data-tool="timestamp">Timestamp</button>
+            <button class="nav-dropdown-item" data-tool="color">Color</button>
+            <button class="nav-dropdown-item" data-tool="unit">Unit</button>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-btn" data-dropdown="dev">Dev <span class="dropdown-arrow">▼</span></button>
+          <div class="nav-dropdown-menu" id="dropdown-dev">
+            <button class="nav-dropdown-item" data-tool="regex">Regex</button>
+            <button class="nav-dropdown-item" data-tool="sql">SQL</button>
+            <button class="nav-dropdown-item" data-tool="cron">Cron</button>
+            <button class="nav-dropdown-item" data-tool="diff">Diff</button>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-btn" data-dropdown="productivity">Productivity <span class="dropdown-arrow">▼</span></button>
+          <div class="nav-dropdown-menu" id="dropdown-productivity">
+            <button class="nav-dropdown-item" data-tool="pomodoro">Pomodoro</button>
+            <button class="nav-dropdown-item" data-tool="markdown">Markdown</button>
+            <button class="nav-dropdown-item" data-tool="notes">Scratchpad</button>
+          </div>
+        </div>
       </nav>
       <div class="security-badge">
         <span class="badge-icon">🔒</span>
