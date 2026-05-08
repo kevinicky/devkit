@@ -2,20 +2,13 @@
   'use strict';
 
   function init() {
-    const navButtons = document.querySelectorAll('.nav-btn');
-    const tools = document.querySelectorAll('.tool');
+    const toolSelect = document.getElementById('tool-select');
 
-    navButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const toolId = btn.dataset.tool;
-
-        navButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        tools.forEach(t => t.classList.remove('active'));
-        const target = document.getElementById('tool-' + toolId);
-        if (target) target.classList.add('active');
-      });
+    toolSelect.addEventListener('change', () => {
+      const toolId = toolSelect.value;
+      document.querySelectorAll('.tool').forEach(t => t.classList.remove('active'));
+      const target = document.getElementById('tool-' + toolId);
+      if (target) target.classList.add('active');
     });
 
     document.querySelectorAll('.jwt-tab').forEach(tab => {
@@ -31,14 +24,14 @@
     document.addEventListener('keydown', (e) => {
       if (e.altKey) {
         const keyMap = {
-          '1': 'jwt', '2': 'json', '3': 'base64', '4': 'url',
-          '5': 'idgen', '6': 'uuid', '7': 'password', '8': 'lorem',
-          '9': 'hash', '0': 'timestamp'
+          '1': 'jwt', '2': 'json', '3': 'jsonenc', '4': 'base64',
+          '5': 'url', '6': 'idgen', '7': 'uuid', '8': 'password',
+          '9': 'lorem', '0': 'hash'
         };
         if (keyMap[e.key]) {
           e.preventDefault();
-          const btn = document.querySelector('[data-tool="' + keyMap[e.key] + '"]');
-          if (btn) btn.click();
+          toolSelect.value = keyMap[e.key];
+          toolSelect.dispatchEvent(new Event('change'));
         }
       }
     });

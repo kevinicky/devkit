@@ -23,40 +23,38 @@
         <h1>devkit</h1>
       </div>
       <nav id="main-nav">
-        <div class="nav-group">
-          <span class="nav-group-label">Encode</span>
-          <button class="nav-btn active" data-tool="jwt">JWT</button>
-          <button class="nav-btn" data-tool="json">JSON</button>
-          <button class="nav-btn" data-tool="base64">Base64</button>
-          <button class="nav-btn" data-tool="url">URL</button>
-        </div>
-        <div class="nav-group">
-          <span class="nav-group-label">Generate</span>
-          <button class="nav-btn" data-tool="idgen">ID</button>
-          <button class="nav-btn" data-tool="uuid">UUID</button>
-          <button class="nav-btn" data-tool="password">Pass</button>
-          <button class="nav-btn" data-tool="lorem">Lorem</button>
-        </div>
-        <div class="nav-group">
-          <span class="nav-group-label">Convert</span>
-          <button class="nav-btn" data-tool="hash">Hash</button>
-          <button class="nav-btn" data-tool="timestamp">Time</button>
-          <button class="nav-btn" data-tool="color">Color</button>
-          <button class="nav-btn" data-tool="unit">Unit</button>
-        </div>
-        <div class="nav-group">
-          <span class="nav-group-label">Dev</span>
-          <button class="nav-btn" data-tool="regex">Regex</button>
-          <button class="nav-btn" data-tool="sql">SQL</button>
-          <button class="nav-btn" data-tool="cron">Cron</button>
-          <button class="nav-btn" data-tool="diff">Diff</button>
-        </div>
-        <div class="nav-group">
-          <span class="nav-group-label">Productivity</span>
-          <button class="nav-btn" data-tool="pomodoro">Pomodoro</button>
-          <button class="nav-btn" data-tool="markdown">MD</button>
-          <button class="nav-btn" data-tool="notes">Notes</button>
-        </div>
+        <select id="tool-select" class="tool-select">
+          <optgroup label="Encode">
+            <option value="jwt">JWT</option>
+            <option value="json">JSON Prettify</option>
+            <option value="jsonenc">JSON Encode</option>
+            <option value="base64">Base64</option>
+            <option value="url">URL</option>
+          </optgroup>
+          <optgroup label="Generate">
+            <option value="idgen">ID Generator</option>
+            <option value="uuid">UUID</option>
+            <option value="password">Password</option>
+            <option value="lorem">Lorem Ipsum</option>
+          </optgroup>
+          <optgroup label="Convert">
+            <option value="hash">Hash</option>
+            <option value="timestamp">Timestamp</option>
+            <option value="color">Color</option>
+            <option value="unit">Unit</option>
+          </optgroup>
+          <optgroup label="Dev">
+            <option value="regex">Regex</option>
+            <option value="sql">SQL</option>
+            <option value="cron">Cron</option>
+            <option value="diff">Diff</option>
+          </optgroup>
+          <optgroup label="Productivity">
+            <option value="pomodoro">Pomodoro</option>
+            <option value="markdown">Markdown</option>
+            <option value="notes">Scratchpad</option>
+          </optgroup>
+        </select>
       </nav>
       <div class="security-badge">
         <span class="badge-icon">🔒</span>
@@ -149,12 +147,10 @@
       </section>
 
       <section id="tool-json" class="tool">
-        <h2>JSON Tools</h2>
+        <h2>JSON Prettify/Minify</h2>
         <div class="json-controls">
           <button id="json-prettify" class="btn-primary">Prettify</button>
           <button id="json-minify" class="btn-secondary">Minify</button>
-          <button id="json-encode" class="btn-secondary">Encode</button>
-          <button id="json-decode" class="btn-secondary">Decode</button>
           <button id="json-copy" class="btn-secondary">Copy</button>
           <button id="json-clear" class="btn-danger">Clear</button>
         </div>
@@ -169,6 +165,28 @@
           </div>
         </div>
         <div id="json-error" class="error-msg hidden"></div>
+      </section>
+
+      <section id="tool-jsonenc" class="tool">
+        <h2>JSON Encode/Decode</h2>
+        <div class="json-controls">
+          <button id="jsonenc-encode" class="btn-primary">Encode</button>
+          <button id="jsonenc-decode" class="btn-secondary">Decode</button>
+          <button id="jsonenc-swap" class="btn-secondary">Swap</button>
+          <button id="jsonenc-copy" class="btn-secondary">Copy</button>
+          <button id="jsonenc-clear" class="btn-danger">Clear</button>
+        </div>
+        <div class="tool-layout">
+          <div class="input-section">
+            <label for="jsonenc-input">Input</label>
+            <textarea id="jsonenc-input" placeholder='{"key": "value"} or %7B%22key%22%3A%22value%22%7D' spellcheck="false"></textarea>
+          </div>
+          <div class="output-section">
+            <label>Output</label>
+            <pre id="jsonenc-output" class="output-box"><span class="placeholder">Output will appear here</span></pre>
+          </div>
+        </div>
+        <div id="jsonenc-error" class="error-msg hidden"></div>
       </section>
 
       <section id="tool-regex" class="tool">
@@ -566,6 +584,7 @@
   <script src="js/jwt-generator.js"></script>
   <script src="js/id-generator.js"></script>
   <script src="js/json-tools.js"></script>
+  <script src="js/json-encode-tool.js"></script>
   <script src="js/regex-tester.js"></script>
   <script src="js/pomodoro.js"></script>
   <script src="js/text-diff.js"></script>

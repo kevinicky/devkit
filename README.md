@@ -4,13 +4,14 @@ A security-focused developer productivity toolkit that runs entirely in your bro
 
 **URL**: `https://kevinicky.github.io/devkit/`
 
-## Tools (19)
+## Tools (20)
 
 ### Encode
 | Tool | Description |
 |------|-------------|
 | **JWT** | Decode tokens + Generate (HS256) with sub-tabs |
-| **JSON** | Prettify, minify, encode, decode |
+| **JSON Prettify** | Format and minify JSON |
+| **JSON Encode** | URL encode/decode JSON strings |
 | **Base64** | Encode/decode with swap support |
 | **URL** | URL encode/decode with swap support |
 
@@ -56,15 +57,15 @@ A security-focused developer productivity toolkit that runs entirely in your bro
 ## Keyboard Shortcuts
 
 - `Alt+1` - JWT
-- `Alt+2` - JSON
-- `Alt+3` - Base64
-- `Alt+4` - URL
-- `Alt+5` - ID Generator
-- `Alt+6` - UUID
-- `Alt+7` - Password
-- `Alt+8` - Lorem Ipsum
-- `Alt+9` - Hash
-- `Alt+0` - Timestamp
+- `Alt+2` - JSON Prettify
+- `Alt+3` - JSON Encode
+- `Alt+4` - Base64
+- `Alt+5` - URL
+- `Alt+6` - ID Generator
+- `Alt+7` - UUID
+- `Alt+8` - Password
+- `Alt+9` - Lorem Ipsum
+- `Alt+0` - Hash
 
 ## Deploy to GitHub Pages
 

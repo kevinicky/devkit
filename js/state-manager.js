@@ -11,48 +11,48 @@
 
   function load(key) {
     try {
-      const val = sessionStorage.getItem(PREFIX + key);
-      return val;
+      return sessionStorage.getItem(PREFIX + key);
     } catch (e) {
       return null;
     }
   }
 
-  function restoreText(id) {
-    const val = load(id);
-    const el = document.getElementById(id);
-    if (val !== null && el) {
-      el.value = val;
-      el.dispatchEvent(new Event('input', { bubbles: true }));
-    }
-  }
-
   function restoreAll() {
-    const textareas = ['jwt-input', 'json-input', 'regex-pattern', 'regex-flags', 'regex-test-string',
+    const textareas = ['jwt-input', 'json-input', 'jsonenc-input', 'regex-pattern', 'regex-flags', 'regex-test-string',
       'diff-original', 'diff-modified', 'hash-input', 'base64-input', 'url-input',
       'markdown-input', 'sql-input', 'cron-input', 'jwtgen-header', 'jwtgen-payload', 'jwtgen-secret',
       'notes-input', 'timestamp-input', 'color-hex', 'color-rgb', 'color-hsl'];
 
-    textareas.forEach(id => restoreText(id));
+    textareas.forEach(id => {
+      const val = load(id);
+      const el = document.getElementById(id);
+      if (val !== null && el) el.value = val;
+    });
 
     const selects = ['idgen-country', 'lorem-type', 'unit-category-select', 'uuid-format'];
     selects.forEach(id => {
       const val = load(id);
       const el = document.getElementById(id);
-      if (val && el) { el.value = val; el.dispatchEvent(new Event('change', { bubbles: true })); }
+      if (val && el) el.value = val;
     });
 
     const numbers = ['idgen-count', 'uuid-count', 'lorem-count', 'password-length', 'unit-from-value'];
     numbers.forEach(id => {
       const val = load(id);
       const el = document.getElementById(id);
-      if (val !== null && el) { el.value = val; el.dispatchEvent(new Event('input', { bubbles: true })); }
+      if (val !== null && el) el.value = val;
     });
 
     const activeTool = load('active-tool');
     if (activeTool) {
       const btn = document.querySelector('[data-tool="' + activeTool + '"]');
-      if (btn) btn.click();
+      if (btn) {
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.tool').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById('tool-' + activeTool);
+        if (target) target.classList.add('active');
+      }
     }
   }
 
@@ -68,6 +68,18 @@
     document.querySelectorAll('.nav-btn').forEach(btn => {
       btn.addEventListener('click', () => save('active-tool', btn.dataset.tool));
     });
+
+    const toolSelect = document.getElementById('tool-select');
+    if (toolSelect) {
+      toolSelect.addEventListener('change', () => {
+        const val = toolSelect.value;
+        if (val) {
+          const btn = document.querySelector('[data-tool="' + val + '"]');
+          if (btn) btn.click();
+          save('active-tool', val);
+        }
+      });
+    }
   }
 
   function init() {
