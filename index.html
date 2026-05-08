@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>devkit</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -29,6 +29,20 @@
         <button class="nav-btn" data-tool="regex">Regex</button>
         <button class="nav-btn" data-tool="pomodoro">Pomodoro</button>
         <button class="nav-btn" data-tool="diff">Diff</button>
+        <button class="nav-btn" data-tool="hash">Hash</button>
+        <button class="nav-btn" data-tool="base64">Base64</button>
+        <button class="nav-btn" data-tool="url">URL</button>
+        <button class="nav-btn" data-tool="uuid">UUID</button>
+        <button class="nav-btn" data-tool="timestamp">Time</button>
+        <button class="nav-btn" data-tool="color">Color</button>
+        <button class="nav-btn" data-tool="markdown">MD</button>
+        <button class="nav-btn" data-tool="sql">SQL</button>
+        <button class="nav-btn" data-tool="cron">Cron</button>
+        <button class="nav-btn" data-tool="jwtgen">JWT+</button>
+        <button class="nav-btn" data-tool="notes">Notes</button>
+        <button class="nav-btn" data-tool="unit">Unit</button>
+        <button class="nav-btn" data-tool="lorem">Lorem</button>
+        <button class="nav-btn" data-tool="password">Pass</button>
       </nav>
       <div class="security-badge">
         <span class="badge-icon">🔒</span>
@@ -187,10 +201,352 @@
           </div>
         </div>
       </section>
+
+      <section id="tool-hash" class="tool">
+        <h2>Hash Generator</h2>
+        <div class="hash-controls">
+          <label for="hash-input">Input Text</label>
+          <textarea id="hash-input" placeholder="Enter text to hash..." spellcheck="false"></textarea>
+        </div>
+        <div class="hash-results">
+          <div class="hash-result-item">
+            <label>MD5</label>
+            <div class="hash-output-row">
+              <code id="hash-md5" class="hash-value">-</code>
+              <button class="btn-copy-hash btn-secondary" data-hash="md5">Copy</button>
+            </div>
+          </div>
+          <div class="hash-result-item">
+            <label>SHA-1</label>
+            <div class="hash-output-row">
+              <code id="hash-sha1" class="hash-value">-</code>
+              <button class="btn-copy-hash btn-secondary" data-hash="sha1">Copy</button>
+            </div>
+          </div>
+          <div class="hash-result-item">
+            <label>SHA-256</label>
+            <div class="hash-output-row">
+              <code id="hash-sha256" class="hash-value">-</code>
+              <button class="btn-copy-hash btn-secondary" data-hash="sha256">Copy</button>
+            </div>
+          </div>
+          <div class="hash-result-item">
+            <label>SHA-512</label>
+            <div class="hash-output-row">
+              <code id="hash-sha512" class="hash-value">-</code>
+              <button class="btn-copy-hash btn-secondary" data-hash="sha512">Copy</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tool-base64" class="tool">
+        <h2>Base64 Encode/Decode</h2>
+        <div class="base64-controls">
+          <button id="base64-encode" class="btn-primary">Encode</button>
+          <button id="base64-decode" class="btn-secondary">Decode</button>
+          <button id="base64-swap" class="btn-secondary">Swap</button>
+          <button id="base64-copy" class="btn-secondary">Copy Output</button>
+          <button id="base64-clear" class="btn-danger">Clear</button>
+        </div>
+        <div class="tool-layout">
+          <div class="input-section">
+            <label for="base64-input">Input</label>
+            <textarea id="base64-input" placeholder="Enter text or base64 string..." spellcheck="false"></textarea>
+          </div>
+          <div class="output-section">
+            <label>Output</label>
+            <pre id="base64-output" class="output-box"><span class="placeholder">Output will appear here</span></pre>
+          </div>
+        </div>
+        <div id="base64-error" class="error-msg hidden"></div>
+      </section>
+
+      <section id="tool-url" class="tool">
+        <h2>URL Encode/Decode</h2>
+        <div class="url-controls">
+          <button id="url-encode" class="btn-primary">Encode</button>
+          <button id="url-decode" class="btn-secondary">Decode</button>
+          <button id="url-swap" class="btn-secondary">Swap</button>
+          <button id="url-copy" class="btn-secondary">Copy Output</button>
+          <button id="url-clear" class="btn-danger">Clear</button>
+        </div>
+        <div class="tool-layout">
+          <div class="input-section">
+            <label for="url-input">Input</label>
+            <textarea id="url-input" placeholder="Enter URL or encoded string..." spellcheck="false"></textarea>
+          </div>
+          <div class="output-section">
+            <label>Output</label>
+            <pre id="url-output" class="output-box"><span class="placeholder">Output will appear here</span></pre>
+          </div>
+        </div>
+        <div id="url-error" class="error-msg hidden"></div>
+      </section>
+
+      <section id="tool-uuid" class="tool">
+        <h2>UUID Generator</h2>
+        <div class="uuid-controls">
+          <div class="control-group">
+            <label for="uuid-count">Count</label>
+            <input type="number" id="uuid-count" value="1" min="1" max="100">
+          </div>
+          <div class="control-group">
+            <label for="uuid-format">Format</label>
+            <select id="uuid-format">
+              <option value="standard">Standard (with dashes)</option>
+              <option value="nodash">No dashes</option>
+              <option value="upper">UPPERCASE</option>
+            </select>
+          </div>
+          <button id="uuid-generate" class="btn-primary">Generate</button>
+          <button id="uuid-copy" class="btn-secondary">Copy All</button>
+        </div>
+        <pre id="uuid-output" class="output-box"><span class="placeholder">Generated UUIDs will appear here</span></pre>
+      </section>
+
+      <section id="tool-timestamp" class="tool">
+        <h2>Timestamp Converter</h2>
+        <div class="timestamp-container">
+          <div class="timestamp-current">
+            <label>Current Unix Timestamp</label>
+            <div id="timestamp-now" class="timestamp-value">-</div>
+          </div>
+          <div class="timestamp-converter">
+            <div class="timestamp-section">
+              <label>Unix Timestamp → Date</label>
+              <input type="text" id="timestamp-input" placeholder="1700000000">
+              <div id="timestamp-result" class="timestamp-result">-</div>
+            </div>
+            <div class="timestamp-section">
+              <label>Date → Unix Timestamp</label>
+              <input type="datetime-local" id="date-input">
+              <div id="date-result" class="timestamp-result">-</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tool-color" class="tool">
+        <h2>Color Converter</h2>
+        <div class="color-container">
+          <div class="color-picker-section">
+            <label>Pick Color</label>
+            <input type="color" id="color-picker" value="#58a6ff">
+            <div id="color-preview" class="color-preview"></div>
+          </div>
+          <div class="color-values">
+            <div class="color-value-item">
+              <label>HEX</label>
+              <input type="text" id="color-hex" value="#58a6ff" spellcheck="false">
+              <button class="btn-copy-color btn-secondary" data-format="hex">Copy</button>
+            </div>
+            <div class="color-value-item">
+              <label>RGB</label>
+              <input type="text" id="color-rgb" value="rgb(88, 166, 255)" spellcheck="false">
+              <button class="btn-copy-color btn-secondary" data-format="rgb">Copy</button>
+            </div>
+            <div class="color-value-item">
+              <label>HSL</label>
+              <input type="text" id="color-hsl" value="hsl(213, 100%, 67%)" spellcheck="false">
+              <button class="btn-copy-color btn-secondary" data-format="hsl">Copy</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tool-markdown" class="tool">
+        <h2>Markdown Preview</h2>
+        <div class="tool-layout">
+          <div class="input-section">
+            <label for="markdown-input">Markdown</label>
+            <textarea id="markdown-input" placeholder="# Heading&#10;&#10;**bold** and *italic*&#10;&#10;- List item&#10;- Another item" spellcheck="false"></textarea>
+          </div>
+          <div class="output-section">
+            <label>Preview</label>
+            <div id="markdown-output" class="markdown-preview"><span class="placeholder">Preview will appear here</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tool-sql" class="tool">
+        <h2>SQL Formatter</h2>
+        <div class="sql-controls">
+          <button id="sql-format" class="btn-primary">Format</button>
+          <button id="sql-minify" class="btn-secondary">Minify</button>
+          <button id="sql-copy" class="btn-secondary">Copy</button>
+          <button id="sql-clear" class="btn-danger">Clear</button>
+        </div>
+        <div class="tool-layout">
+          <div class="input-section">
+            <label for="sql-input">SQL Query</label>
+            <textarea id="sql-input" placeholder="SELECT * FROM users WHERE id = 1 AND status = 'active' ORDER BY created_at DESC;" spellcheck="false"></textarea>
+          </div>
+          <div class="output-section">
+            <label>Formatted</label>
+            <pre id="sql-output" class="output-box"><span class="placeholder">Formatted SQL will appear here</span></pre>
+          </div>
+        </div>
+        <div id="sql-error" class="error-msg hidden"></div>
+      </section>
+
+      <section id="tool-cron" class="tool">
+        <h2>Cron Parser</h2>
+        <div class="cron-container">
+          <div class="cron-input-section">
+            <label for="cron-input">Cron Expression</label>
+            <input type="text" id="cron-input" placeholder="*/5 * * * *" value="*/5 * * * *">
+            <button id="cron-parse" class="btn-primary">Parse</button>
+          </div>
+          <div class="cron-visual">
+            <div class="cron-fields">
+              <div class="cron-field"><label>Minute</label><span id="cron-minute">-</span></div>
+              <div class="cron-field"><label>Hour</label><span id="cron-hour">-</span></div>
+              <div class="cron-field"><label>Day</label><span id="cron-day">-</span></div>
+              <div class="cron-field"><label>Month</label><span id="cron-month">-</span></div>
+              <div class="cron-field"><label>Weekday</label><span id="cron-weekday">-</span></div>
+            </div>
+          </div>
+          <div id="cron-description" class="cron-description">Enter a cron expression to see its meaning</div>
+          <div id="cron-next" class="cron-next"></div>
+        </div>
+      </section>
+
+      <section id="tool-jwtgen" class="tool">
+        <h2>JWT Generator</h2>
+        <div class="jwtgen-container">
+          <div class="jwtgen-section">
+            <label>Header (JSON)</label>
+            <textarea id="jwtgen-header" placeholder='{"alg": "HS256", "typ": "JWT"}' spellcheck="false">{"alg": "HS256", "typ": "JWT"}</textarea>
+          </div>
+          <div class="jwtgen-section">
+            <label>Payload (JSON)</label>
+            <textarea id="jwtgen-payload" placeholder='{"sub": "1234567890", "name": "John Doe"}' spellcheck="false">{"sub": "1234567890", "name": "John Doe", "iat": 1700000000}</textarea>
+          </div>
+          <div class="jwtgen-section">
+            <label>Secret</label>
+            <input type="text" id="jwtgen-secret" placeholder="your-secret-key" value="your-256-bit-secret">
+          </div>
+          <div class="jwtgen-controls">
+            <button id="jwtgen-generate" class="btn-primary">Generate Token</button>
+            <button id="jwtgen-copy" class="btn-secondary">Copy Token</button>
+          </div>
+          <div class="jwtgen-output">
+            <label>Generated Token</label>
+            <pre id="jwtgen-token" class="output-box"><span class="placeholder">Token will appear here</span></pre>
+          </div>
+        </div>
+        <div id="jwtgen-error" class="error-msg hidden"></div>
+      </section>
+
+      <section id="tool-notes" class="tool">
+        <h2>Scratchpad</h2>
+        <div class="notes-container">
+          <div class="notes-header">
+            <span class="notes-warning">⚠️ Memory only - clears on refresh</span>
+            <button id="notes-clear" class="btn-danger">Clear</button>
+          </div>
+          <textarea id="notes-input" placeholder="Type anything here... This will NOT be saved. Perfect for sensitive scratch work." spellcheck="false"></textarea>
+          <div class="notes-stats">
+            <span id="notes-chars">0 characters</span>
+            <span id="notes-words">0 words</span>
+            <span id="notes-lines">0 lines</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="tool-unit" class="tool">
+        <h2>Unit Converter</h2>
+        <div class="unit-container">
+          <div class="unit-category">
+            <label for="unit-category-select">Category</label>
+            <select id="unit-category-select">
+              <option value="length">Length</option>
+              <option value="weight">Weight</option>
+              <option value="temperature">Temperature</option>
+              <option value="data">Data Size</option>
+              <option value="time">Time</option>
+            </select>
+          </div>
+          <div class="unit-converter-row">
+            <div class="unit-input-group">
+              <label for="unit-from-value">From</label>
+              <input type="number" id="unit-from-value" value="1" step="any">
+              <select id="unit-from"></select>
+            </div>
+            <div class="unit-swap-container">
+              <button id="unit-swap" class="btn-secondary">⇄</button>
+            </div>
+            <div class="unit-input-group">
+              <label for="unit-to-value">To</label>
+              <input type="number" id="unit-to-value" readonly>
+              <select id="unit-to"></select>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tool-lorem" class="tool">
+        <h2>Lorem Ipsum Generator</h2>
+        <div class="lorem-controls">
+          <div class="control-group">
+            <label for="lorem-type">Type</label>
+            <select id="lorem-type">
+              <option value="paragraphs">Paragraphs</option>
+              <option value="sentences">Sentences</option>
+              <option value="words">Words</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label for="lorem-count">Count</label>
+            <input type="number" id="lorem-count" value="3" min="1" max="50">
+          </div>
+          <button id="lorem-generate" class="btn-primary">Generate</button>
+          <button id="lorem-copy" class="btn-secondary">Copy</button>
+        </div>
+        <pre id="lorem-output" class="output-box"><span class="placeholder">Generated text will appear here</span></pre>
+      </section>
+
+      <section id="tool-password" class="tool">
+        <h2>Password Generator</h2>
+        <div class="password-container">
+          <div class="password-output-section">
+            <div id="password-display" class="password-display">Click generate to create password</div>
+            <button id="password-copy" class="btn-secondary">Copy</button>
+          </div>
+          <div class="password-controls">
+            <div class="control-group">
+              <label for="password-length">Length: <span id="password-length-value">16</span></label>
+              <input type="range" id="password-length" min="8" max="64" value="16">
+            </div>
+            <div class="password-options">
+              <label class="checkbox-label">
+                <input type="checkbox" id="password-upper" checked>
+                <span>Uppercase (A-Z)</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="password-lower" checked>
+                <span>Lowercase (a-z)</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="password-numbers" checked>
+                <span>Numbers (0-9)</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="password-symbols" checked>
+                <span>Symbols (!@#$...)</span>
+              </label>
+            </div>
+            <button id="password-generate" class="btn-primary">Generate Password</button>
+          </div>
+          <div id="password-strength" class="password-strength"></div>
+        </div>
+      </section>
     </main>
 
     <footer>
       <span class="security-note">🔒 All processing happens locally. No data is stored or transmitted.</span>
+      <span class="copyright">© 2026 kevinicky</span>
     </footer>
   </div>
 
@@ -201,6 +557,21 @@
   <script src="js/regex-tester.js"></script>
   <script src="js/pomodoro.js"></script>
   <script src="js/text-diff.js"></script>
+  <script src="js/hash-generator.js"></script>
+  <script src="js/base64-tool.js"></script>
+  <script src="js/url-tool.js"></script>
+  <script src="js/uuid-generator.js"></script>
+  <script src="js/timestamp-converter.js"></script>
+  <script src="js/color-converter.js"></script>
+  <script src="js/markdown-preview.js"></script>
+  <script src="js/sql-formatter.js"></script>
+  <script src="js/cron-parser.js"></script>
+  <script src="js/jwt-generator.js"></script>
+  <script src="js/notes-scratchpad.js"></script>
+  <script src="js/unit-converter.js"></script>
+  <script src="js/lorem-generator.js"></script>
+  <script src="js/password-generator.js"></script>
+  <script src="js/state-manager.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

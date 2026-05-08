@@ -13,19 +13,17 @@
         btn.classList.add('active');
 
         tools.forEach(t => t.classList.remove('active'));
-        document.getElementById('tool-' + toolId).classList.add('active');
+        const target = document.getElementById('tool-' + toolId);
+        if (target) target.classList.add('active');
       });
     });
 
     document.addEventListener('keydown', (e) => {
       if (e.altKey) {
         const keyMap = {
-          '1': 'jwt',
-          '2': 'idgen',
-          '3': 'json',
-          '4': 'regex',
-          '5': 'pomodoro',
-          '6': 'diff'
+          '1': 'jwt', '2': 'idgen', '3': 'json', '4': 'regex',
+          '5': 'pomodoro', '6': 'diff', '7': 'hash', '8': 'base64',
+          '9': 'url', '0': 'uuid'
         };
         if (keyMap[e.key]) {
           e.preventDefault();

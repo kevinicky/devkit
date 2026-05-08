@@ -1,71 +1,60 @@
 (function() {
   'use strict';
 
-  const TAB_CHANNEL = 'devkit-tab-lock';
-  const TAB_ID_KEY = 'devkit-tab-id';
+  const LOCK_KEY = 'devkit-tab-lock';
+  const HEARTBEAT_KEY = 'devkit-tab-heartbeat';
+  const CHANNEL_NAME = 'devkit-tab-channel';
+  const HEARTBEAT_INTERVAL = 2000;
   const LOCK_TIMEOUT = 5000;
 
   let tabId = null;
-  let lockInterval = null;
+  let heartbeatInterval = null;
   let isBlocked = false;
+  let channel = null;
 
-  function generateTabId() {
-    return Date.now().toString(36) + '-' + Math.random().toString(36).substr(2, 9);
+  function generateId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
   }
 
-  function acquireLock() {
-    const existingId = sessionStorage.getItem(TAB_ID_KEY);
-    tabId = generateTabId();
-
-    if (existingId && existingId !== tabId) {
-      const bc = new BroadcastChannel(TAB_CHANNEL);
-      bc.postMessage({ type: 'ping', tabId: existingId });
-      bc.close();
-
-      setTimeout(() => {
-        const currentId = sessionStorage.getItem(TAB_ID_KEY);
-        if (currentId === existingId) {
-          blockTab();
-          return;
-        }
-        activateTab();
-      }, 100);
-    } else {
-      activateTab();
+  function getLock() {
+    try {
+      const data = localStorage.getItem(LOCK_KEY);
+      return data ? JSON.parse(data) : null;
+    } catch (e) {
+      return null;
     }
   }
 
-  function activateTab() {
-    tabId = generateTabId();
-    sessionStorage.setItem(TAB_ID_KEY, tabId);
+  function setLock(id) {
+    try {
+      localStorage.setItem(LOCK_KEY, JSON.stringify({ id: id, time: Date.now() }));
+    } catch (e) {}
+  }
 
-    const bc = new BroadcastChannel(TAB_CHANNEL);
-    bc.postMessage({ type: 'lock', tabId: tabId });
-
-    bc.onmessage = (event) => {
-      if (event.data.type === 'lock' && event.data.tabId !== tabId) {
-        blockTab();
+  function clearLock() {
+    try {
+      const current = getLock();
+      if (current && current.id === tabId) {
+        localStorage.removeItem(LOCK_KEY);
       }
-    };
+    } catch (e) {}
+  }
 
-    lockInterval = setInterval(() => {
-      if (sessionStorage.getItem(TAB_ID_KEY) === tabId) {
-        sessionStorage.setItem(TAB_ID_KEY, tabId);
-      } else {
-        blockTab();
-      }
-    }, LOCK_TIMEOUT);
+  function updateHeartbeat() {
+    try {
+      localStorage.setItem(HEARTBEAT_KEY, JSON.stringify({ id: tabId, time: Date.now() }));
+    } catch (e) {}
+  }
 
-    bc.close();
-    showApp();
+  function isLockValid(lock) {
+    if (!lock) return false;
+    return (Date.now() - lock.time) < LOCK_TIMEOUT;
   }
 
   function blockTab() {
     if (isBlocked) return;
     isBlocked = true;
-
-    if (lockInterval) clearInterval(lockInterval);
-
+    stopHeartbeat();
     document.getElementById('tab-blocked').classList.remove('hidden');
     document.getElementById('app').classList.add('hidden');
   }
@@ -76,26 +65,121 @@
     document.getElementById('app').classList.remove('hidden');
   }
 
+  function startHeartbeat() {
+    updateHeartbeat();
+    heartbeatInterval = setInterval(() => {
+      if (!isBlocked) {
+        setLock(tabId);
+        updateHeartbeat();
+      }
+    }, HEARTBEAT_INTERVAL);
+  }
+
+  function stopHeartbeat() {
+    if (heartbeatInterval) {
+      clearInterval(heartbeatInterval);
+      heartbeatInterval = null;
+    }
+  }
+
+  function acquireLock() {
+    tabId = generateId();
+    channel = new BroadcastChannel(CHANNEL_NAME);
+
+    const existingLock = getLock();
+
+    if (existingLock && isLockValid(existingLock)) {
+      channel.postMessage({ type: 'ping', tabId: existingLock.id });
+
+      setTimeout(() => {
+        const currentLock = getLock();
+        if (currentLock && currentLock.id === existingLock.id) {
+          blockTab();
+        } else {
+          claimLock();
+        }
+      }, 300);
+    } else {
+      claimLock();
+    }
+
+    channel.onmessage = (e) => {
+      const data = e.data;
+
+      if (data.type === 'ping' && data.tabId === tabId) {
+        setLock(tabId);
+        updateHeartbeat();
+      }
+
+      if (data.type === 'lock' && data.tabId !== tabId) {
+        const currentLock = getLock();
+        if (currentLock && currentLock.id === data.tabId) {
+          blockTab();
+        }
+      }
+
+      if (data.type === 'unlock' && data.tabId !== tabId) {
+        const currentLock = getLock();
+        if (currentLock && currentLock.id === data.tabId) {
+          setTimeout(() => {
+            if (isBlocked) {
+              const newLock = getLock();
+              if (!newLock || newLock.id === data.tabId) {
+                claimLock();
+              }
+            }
+          }, 500);
+        }
+      }
+    };
+  }
+
+  function claimLock() {
+    tabId = generateId();
+    setLock(tabId);
+    updateHeartbeat();
+    startHeartbeat();
+
+    if (channel) {
+      channel.postMessage({ type: 'lock', tabId: tabId });
+    }
+
+    showApp();
+  }
+
   function takeOver() {
-    sessionStorage.removeItem(TAB_ID_KEY);
-    const bc = new BroadcastChannel(TAB_CHANNEL);
-    bc.postMessage({ type: 'force-unlock' });
-    bc.close();
-    setTimeout(() => acquireLock(), 200);
+    const currentLock = getLock();
+    if (currentLock && channel) {
+      channel.postMessage({ type: 'unlock', tabId: currentLock.id });
+    }
+    localStorage.removeItem(LOCK_KEY);
+    setTimeout(() => claimLock(), 400);
   }
 
   function init() {
     document.getElementById('take-over-btn').addEventListener('click', takeOver);
 
     window.addEventListener('storage', (e) => {
-      if (e.key === TAB_ID_KEY && e.newValue !== tabId && e.newValue !== null) {
-        blockTab();
+      if (e.key === LOCK_KEY) {
+        const newLock = getLock();
+        if (newLock && newLock.id !== tabId && !isBlocked) {
+          blockTab();
+        }
+      }
+      if (e.key === HEARTBEAT_KEY && isBlocked) {
+        const hb = JSON.parse(e.newValue || '{}');
+        if (hb.id !== tabId && isLockValid(hb)) {
+          blockTab();
+        }
       }
     });
 
     window.addEventListener('beforeunload', () => {
-      if (sessionStorage.getItem(TAB_ID_KEY) === tabId) {
-        sessionStorage.removeItem(TAB_ID_KEY);
+      if (!isBlocked) {
+        clearLock();
+        if (channel) {
+          channel.postMessage({ type: 'unlock', tabId: tabId });
+        }
       }
     });
 
