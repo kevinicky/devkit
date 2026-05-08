@@ -29,6 +29,7 @@
             <button class="nav-btn active" data-tool="jwt">JWT</button>
             <button class="nav-btn" data-tool="json">JSON</button>
             <button class="nav-btn" data-tool="jsonenc">JSON+</button>
+            <button class="nav-btn" data-tool="yaml">YAML</button>
             <button class="nav-btn" data-tool="base64">Base64</button>
             <button class="nav-btn" data-tool="url">URL</button>
           </div>
@@ -58,6 +59,7 @@
             <button class="nav-btn" data-tool="diff">Diff</button>
             <button class="nav-btn" data-tool="diffjson">JSON Diff</button>
             <button class="nav-btn" data-tool="mermaid">Mermaid</button>
+            <button class="nav-btn" data-tool="gitcmd">Git</button>
           </div>
           <div class="nav-group">
             <span class="nav-group-label">Web</span>
@@ -66,6 +68,7 @@
             <button class="nav-btn" data-tool="htmlentity">HTML</button>
             <button class="nav-btn" data-tool="escape">Escape</button>
             <button class="nav-btn" data-tool="cidr">CIDR</button>
+            <button class="nav-btn" data-tool="httpstatus">HTTP</button>
           </div>
           <div class="nav-group">
             <span class="nav-group-label">Security</span>
@@ -77,10 +80,12 @@
             <span class="nav-group-label">Productivity</span>
             <button class="nav-btn" data-tool="pomodoro">Pomodoro</button>
             <button class="nav-btn" data-tool="markdown">MD</button>
+            <button class="nav-btn" data-tool="mdtable">Table</button>
             <button class="nav-btn" data-tool="notes">Notes</button>
             <button class="nav-btn" data-tool="checklist">Check</button>
             <button class="nav-btn" data-tool="standup">Standup</button>
             <button class="nav-btn" data-tool="snippets">Snippets</button>
+            <button class="nav-btn" data-tool="timezone">Timezone</button>
           </div>
         </div>
       </nav>
@@ -215,6 +220,28 @@
           </div>
         </div>
         <div id="jsonenc-error" class="error-msg hidden"></div>
+      </section>
+
+      <section id="tool-yaml" class="tool">
+        <h2>YAML ↔ JSON Converter</h2>
+        <div class="yaml-controls">
+          <button id="yaml-tojson" class="btn-primary">YAML → JSON</button>
+          <button id="yaml-toyaml" class="btn-secondary">JSON → YAML</button>
+          <button id="yaml-swap" class="btn-secondary">Swap</button>
+          <button id="yaml-copy" class="btn-secondary">Copy</button>
+          <button id="yaml-clear" class="btn-danger">Clear</button>
+        </div>
+        <div class="tool-layout">
+          <div class="input-section">
+            <label for="yaml-input">Input</label>
+            <textarea id="yaml-input" placeholder="key: value&#10;list:&#10;  - item1&#10;  - item2&#10;OR&#10;{&quot;key&quot;: &quot;value&quot;}" spellcheck="false"></textarea>
+          </div>
+          <div class="output-section">
+            <label>Output</label>
+            <pre id="yaml-output" class="output-box"><span class="placeholder">Output will appear here</span></pre>
+          </div>
+        </div>
+        <div id="yaml-error" class="error-msg hidden"></div>
       </section>
 
       <section id="tool-regex" class="tool">
@@ -449,6 +476,29 @@
           <div class="output-section">
             <label>Preview</label>
             <div id="markdown-output" class="markdown-preview"><span class="placeholder">Preview will appear here</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tool-mdtable" class="tool">
+        <h2>Markdown Table Generator</h2>
+        <div class="mdtable-container">
+          <div class="mdtable-controls">
+            <div class="control-group">
+              <label for="mdtable-cols">Columns</label>
+              <input type="number" id="mdtable-cols" value="3" min="1" max="10">
+            </div>
+            <div class="control-group">
+              <label for="mdtable-rows">Rows</label>
+              <input type="number" id="mdtable-rows" value="3" min="1" max="50">
+            </div>
+            <button id="mdtable-generate" class="btn-primary">Generate</button>
+            <button id="mdtable-copy" class="btn-secondary">Copy</button>
+          </div>
+          <div id="mdtable-editor" class="mdtable-editor"></div>
+          <div class="mdtable-output-section">
+            <label>Markdown</label>
+            <div class="cssgen-code-row"><code id="mdtable-output">-</code><button id="mdtable-copy-output" class="btn-secondary">Copy</button></div>
           </div>
         </div>
       </section>
@@ -889,6 +939,14 @@
         <div id="escape-error" class="error-msg hidden"></div>
       </section>
 
+      <section id="tool-httpstatus" class="tool">
+        <h2>HTTP Status Codes</h2>
+        <div class="httpstatus-container">
+          <input type="text" id="httpstatus-search" placeholder="Search by code or description..." spellcheck="false">
+          <div id="httpstatus-list" class="httpstatus-list"></div>
+        </div>
+      </section>
+
       <section id="tool-secheaders" class="tool">
         <h2>Security Headers Analyzer</h2>
         <div class="secheaders-container">
@@ -1050,6 +1108,23 @@
         </div>
       </section>
 
+      <section id="tool-timezone" class="tool">
+        <h2>Timezone Converter</h2>
+        <div class="timezone-container">
+          <div class="timezone-input-section">
+            <label for="timezone-datetime">Date & Time</label>
+            <input type="datetime-local" id="timezone-datetime">
+          </div>
+          <div class="timezone-zones">
+            <div class="timezone-add">
+              <select id="timezone-select"></select>
+              <button id="timezone-add" class="btn-primary">Add</button>
+            </div>
+            <div id="timezone-list" class="timezone-list"></div>
+          </div>
+        </div>
+      </section>
+
       <section id="tool-regexlib" class="tool">
         <h2>Regex Library</h2>
         <div class="regexlib-container">
@@ -1081,6 +1156,61 @@
           <pre id="diffjson-output" class="output-box"><span class="placeholder">JSON diff will appear here</span></pre>
         </div>
         <div id="diffjson-error" class="error-msg hidden"></div>
+      </section>
+
+      <section id="tool-gitcmd" class="tool">
+        <h2>Git Command Builder</h2>
+        <div class="gitcmd-container">
+          <div class="gitcmd-type-section">
+            <label for="gitcmd-type">Operation</label>
+            <select id="gitcmd-type">
+              <option value="branch">Branch</option>
+              <option value="merge">Merge</option>
+              <option value="rebase">Rebase</option>
+              <option value="reset">Reset</option>
+              <option value="cherry">Cherry Pick</option>
+              <option value="tag">Tag</option>
+              <option value="remote">Remote</option>
+              <option value="log">Log</option>
+            </select>
+          </div>
+          <div id="gitcmd-branch-panel" class="gitcmd-panel active">
+            <div class="control-group"><label>Branch Name</label><input type="text" id="gitcmd-branch-name" placeholder="feature/my-branch"></div>
+            <div class="control-group"><label>Action</label><select id="gitcmd-branch-action"><option value="create">Create</option><option value="create-switch">Create & Switch</option><option value="switch">Switch</option><option value="delete">Delete</option><option value="delete-remote">Delete Remote</option><option value="push">Push</option><option value="push-set">Push & Set Upstream</option></select></div>
+          </div>
+          <div id="gitcmd-merge-panel" class="gitcmd-panel">
+            <div class="control-group"><label>Branch to Merge</label><input type="text" id="gitcmd-merge-branch" placeholder="feature/my-branch"></div>
+            <div class="control-group"><label>Options</label><select id="gitcmd-merge-opt"><option value="">Normal</option><option value="--no-ff">No Fast-Forward</option><option value="--squash">Squash</option></select></div>
+          </div>
+          <div id="gitcmd-rebase-panel" class="gitcmd-panel">
+            <div class="control-group"><label>Rebase onto</label><input type="text" id="gitcmd-rebase-onto" placeholder="main"></div>
+            <div class="control-group"><label>Options</label><select id="gitcmd-rebase-opt"><option value="">Normal</option><option value="-i">Interactive</option><option value="--onto">--onto</option></select></div>
+          </div>
+          <div id="gitcmd-reset-panel" class="gitcmd-panel">
+            <div class="control-group"><label>Target</label><input type="text" id="gitcmd-reset-target" placeholder="HEAD~3 or commit hash"></div>
+            <div class="control-group"><label>Type</label><select id="gitcmd-reset-type"><option value="--soft">Soft</option><option value="--mixed">Mixed</option><option value="--hard">Hard</option></select></div>
+          </div>
+          <div id="gitcmd-cherry-panel" class="gitcmd-panel">
+            <div class="control-group"><label>Commit Hash</label><input type="text" id="gitcmd-cherry-hash" placeholder="abc1234"></div>
+          </div>
+          <div id="gitcmd-tag-panel" class="gitcmd-panel">
+            <div class="control-group"><label>Tag Name</label><input type="text" id="gitcmd-tag-name" placeholder="v1.0.0"></div>
+            <div class="control-group"><label>Action</label><select id="gitcmd-tag-action"><option value="create">Create</option><option value="create-push">Create & Push</option><option value="delete">Delete</option><option value="list">List</option></select></div>
+          </div>
+          <div id="gitcmd-remote-panel" class="gitcmd-panel">
+            <div class="control-group"><label>Remote Name</label><input type="text" id="gitcmd-remote-name" placeholder="origin"></div>
+            <div class="control-group"><label>URL</label><input type="text" id="gitcmd-remote-url" placeholder="git@github.com:user/repo.git"></div>
+            <div class="control-group"><label>Action</label><select id="gitcmd-remote-action"><option value="add">Add</option><option value="remove">Remove</option><option value="set-url">Set URL</option><option value="show">Show</option></select></div>
+          </div>
+          <div id="gitcmd-log-panel" class="gitcmd-panel">
+            <div class="control-group"><label>Format</label><select id="gitcmd-log-format"><option value="oneline">One Line</option><option value="short">Short</option><option value="graph">Graph</option><option value="stat">Stat</option></select></div>
+            <div class="control-group"><label>Limit</label><input type="number" id="gitcmd-log-limit" value="10"></div>
+          </div>
+          <div class="gitcmd-output-section">
+            <button id="gitcmd-generate" class="btn-primary">Generate Command</button>
+            <div class="cssgen-code-row"><code id="gitcmd-output">-</code><button id="gitcmd-copy" class="btn-secondary">Copy</button></div>
+          </div>
+        </div>
       </section>
 
       <section id="tool-mermaid" class="tool">
@@ -1237,6 +1367,11 @@
   <script src="js/regex-library.js"></script>
   <script src="js/json-diff.js"></script>
   <script src="js/mermaid-builder.js"></script>
+  <script src="js/yaml-converter.js"></script>
+  <script src="js/git-command.js"></script>
+  <script src="js/http-status.js"></script>
+  <script src="js/md-table.js"></script>
+  <script src="js/timezone-converter.js"></script>
   <script src="js/app.js"></script>
   <script src="js/state-manager.js"></script>
 </body>

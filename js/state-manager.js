@@ -12,7 +12,7 @@
   }
 
   function restoreAll() {
-    const textareas = ['jwt-input', 'json-input', 'jsonenc-input', 'regex-pattern', 'regex-flags', 'regex-test-string',
+    const textareas = ['jwt-input', 'json-input', 'jsonenc-input', 'yaml-input', 'regex-pattern', 'regex-flags', 'regex-test-string',
       'diff-original', 'diff-modified', 'hash-input', 'base64-input', 'url-input',
       'markdown-input', 'sql-input', 'cron-input', 'jwtgen-header', 'jwtgen-payload', 'jwtgen-secret',
       'notes-input', 'timestamp-input', 'color-hex', 'color-rgb', 'color-hsl',
@@ -22,7 +22,9 @@
       'diffjson-original', 'diffjson-modified',
       'mermaid-nodes', 'mermaid-edges', 'mermaid-actors', 'mermaid-messages',
       'mermaid-classes', 'mermaid-relations', 'mermaid-states', 'mermaid-transitions',
-      'mermaid-entities', 'mermaid-er-relations', 'mermaid-gantt-tasks', 'mermaid-pie-slices'];
+      'mermaid-entities', 'mermaid-er-relations', 'mermaid-gantt-tasks', 'mermaid-pie-slices',
+      'gitcmd-branch-name', 'gitcmd-merge-branch', 'gitcmd-rebase-onto', 'gitcmd-reset-target',
+      'gitcmd-cherry-hash', 'gitcmd-tag-name', 'gitcmd-remote-name', 'gitcmd-remote-url'];
 
     textareas.forEach(id => {
       const val = load(id);
@@ -30,7 +32,9 @@
       if (val !== null && el) el.value = val;
     });
 
-    const selects = ['idgen-country', 'lorem-type', 'unit-category-select', 'uuid-format', 'escape-type', 'curl-method', 'mermaid-type'];
+    const selects = ['idgen-country', 'lorem-type', 'unit-category-select', 'uuid-format', 'escape-type', 'curl-method', 'mermaid-type',
+      'gitcmd-type', 'gitcmd-branch-action', 'gitcmd-merge-opt', 'gitcmd-rebase-opt', 'gitcmd-reset-type',
+      'gitcmd-tag-action', 'gitcmd-remote-action', 'gitcmd-log-format'];
     selects.forEach(id => {
       const val = load(id);
       const el = document.getElementById(id);
