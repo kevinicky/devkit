@@ -4,7 +4,7 @@ A security-focused developer productivity toolkit that runs entirely in your bro
 
 **URL**: `https://kevinicky.github.io/devkit/`
 
-## Tools (20)
+## Tools (34)
 
 ### Encode
 | Tool | Description |
@@ -27,6 +27,7 @@ A security-focused developer productivity toolkit that runs entirely in your bro
 | Tool | Description |
 |------|-------------|
 | **Hash** | SHA-1, SHA-256, SHA-512 |
+| **Base Converter** | Binary ↔ Octal ↔ Decimal ↔ Hex |
 | **Timestamp** | Unix timestamp ↔ date with live clock |
 | **Color** | HEX ↔ RGB ↔ HSL with color picker |
 | **Unit** | Length, weight, temperature, data size, time |
@@ -34,10 +35,28 @@ A security-focused developer productivity toolkit that runs entirely in your bro
 ### Dev
 | Tool | Description |
 |------|-------------|
-| **Regex** | Real-time matching with highlight and capture groups |
+| **Regex Tester** | Real-time matching with highlight and capture groups |
+| **Regex Library** | 20 pre-built patterns (email, URL, IP, phone, etc.) |
 | **SQL** | Format and minify SQL queries |
 | **Cron** | Visual cron parser with next run times |
-| **Diff** | LCS-based line diff comparison |
+| **Text Diff** | LCS-based line diff comparison |
+| **JSON Diff** | Structured JSON comparison (key-by-key) |
+
+### Web
+| Tool | Description |
+|------|-------------|
+| **CSS Generator** | Box shadow, gradient, flexbox visual builders |
+| **cURL Generator** | Build HTTP requests as cURL commands |
+| **HTML Entity** | Encode/decode HTML entities |
+| **Escape** | Escape/unescape JSON, JS, HTML, CSS strings |
+| **CIDR** | Network calculator (mask, hosts, broadcast) |
+
+### Security
+| Tool | Description |
+|------|-------------|
+| **Security Headers** | Analyze response headers, get security score |
+| **CSP Builder** | Visual Content Security Policy generator |
+| **Password Entropy** | Bits of entropy + crack time estimate |
 
 ### Productivity
 | Tool | Description |
@@ -45,6 +64,9 @@ A security-focused developer productivity toolkit that runs entirely in your bro
 | **Pomodoro** | 25/5/15 minute modes with session tracking |
 | **Markdown** | Live markdown to HTML preview |
 | **Scratchpad** | Memory-only notes (clears on refresh) |
+| **Checklist** | Memory-only task checklist |
+| **Standup** | Yesterday/today/blockers template |
+| **Snippet Pad** | Memory-only multi-tab code snippets |
 
 ## Security
 

@@ -50,9 +50,12 @@ devkit/
     ├── json-tools.js       # JSON prettify/minify
     ├── json-encode-tool.js # JSON URL encode/decode
     ├── regex-tester.js     # Real-time regex tester
-    ├── pomodoro.js         # Pomodoro timer
+    ├── regex-library.js    # Pre-built regex patterns (20 patterns)
+    ├── pomodoro.js         # Pomodoro timer (persisted)
     ├── text-diff.js        # LCS-based line diff
+    ├── json-diff.js        # Structured JSON diff
     ├── hash-generator.js   # SHA-1/256/512 hashing
+    ├── base-converter.js   # Binary/Octal/Decimal/Hex
     ├── base64-tool.js      # Base64 encode/decode
     ├── url-tool.js         # URL encode/decode
     ├── uuid-generator.js   # v4 UUID generator
@@ -61,13 +64,24 @@ devkit/
     ├── markdown-preview.js # Markdown to HTML
     ├── sql-formatter.js    # SQL format/minify
     ├── cron-parser.js      # Cron expression parser
+    ├── css-generator.js    # Box shadow, gradient, flexbox
+    ├── curl-generator.js   # cURL command builder
+    ├── html-entity.js      # HTML entity encode/decode
+    ├── escape-tool.js      # Escape/unescape (JSON, JS, HTML, CSS)
+    ├── cidr-calc.js        # CIDR network calculator
+    ├── security-headers.js # Security headers analyzer
+    ├── csp-builder.js      # CSP header builder
+    ├── password-generator.js  # Secure password generator
+    ├── password-entropy.js # Password entropy calculator
     ├── notes-scratchpad.js # Memory-only notes
+    ├── checklist.js        # Memory-only task checklist
+    ├── standup.js          # Standup notes template
+    ├── snippet-pad.js      # Memory-only code snippets
     ├── unit-converter.js   # Multi-category unit converter
-    ├── lorem-generator.js  # Lorem ipsum generator
-    └── password-generator.js  # Secure password generator
+    └── lorem-generator.js  # Lorem ipsum generator
 ```
 
-## Tools (20)
+## Tools (34)
 
 ### Encode
 1. **JWT** - Decode + Generate (HS256) with sub-tabs
@@ -77,27 +91,45 @@ devkit/
 5. **URL** - URL encode/decode with swap support
 
 ### Generate
-5. **ID Generator** - Bulk IDs: Indonesia (KTP), Thailand, Philippines, Singapore (NRIC), Malaysia (NRIC)
-6. **UUID** - v4 UUIDs in bulk (standard, no-dash, uppercase)
-7. **Password** - Secure passwords with strength meter
-8. **Lorem Ipsum** - Placeholder text (words, sentences, paragraphs)
+6. **ID Generator** - Bulk IDs: Indonesia (KTP), Thailand, Philippines, Singapore (NRIC), Malaysia (NRIC)
+7. **UUID** - v4 UUIDs in bulk (standard, no-dash, uppercase)
+8. **Password** - Secure passwords with strength meter
+9. **Lorem Ipsum** - Placeholder text (words, sentences, paragraphs)
 
 ### Convert
-9. **Hash** - SHA-1, SHA-256, SHA-512 via Web Crypto API
-10. **Timestamp** - Unix timestamp ↔ date with live clock
-11. **Color** - HEX ↔ RGB ↔ HSL with color picker
-12. **Unit** - Length, weight, temperature, data size, time
+10. **Hash** - SHA-1, SHA-256, SHA-512 via Web Crypto API
+11. **Base Converter** - Binary ↔ Octal ↔ Decimal ↔ Hex
+12. **Timestamp** - Unix timestamp ↔ date with live clock
+13. **Color** - HEX ↔ RGB ↔ HSL with color picker
+14. **Unit** - Length, weight, temperature, data size, time
 
 ### Dev
-13. **Regex** - Real-time matching with highlight and capture groups
-14. **SQL** - Format and minify SQL queries
-15. **Cron** - Visual cron parser with next run times
-16. **Diff** - LCS-based line diff with added/removed highlighting
+15. **Regex Tester** - Real-time matching with highlight and capture groups
+16. **Regex Library** - 20 pre-built patterns (email, URL, IP, phone, etc.)
+17. **SQL** - Format and minify SQL queries
+18. **Cron** - Visual cron parser with next run times
+19. **Text Diff** - LCS-based line diff
+20. **JSON Diff** - Structured JSON comparison (key-by-key)
+
+### Web
+21. **CSS Generator** - Box shadow, gradient, flexbox visual builders
+22. **cURL Generator** - Build HTTP requests as cURL commands
+23. **HTML Entity** - Encode/decode HTML entities
+24. **Escape** - Escape/unescape JSON, JS, HTML, CSS strings
+25. **CIDR** - Network calculator (mask, hosts, broadcast)
+
+### Security
+26. **Security Headers** - Analyze response headers, get security score
+27. **CSP Builder** - Visual Content Security Policy generator
+28. **Password Entropy** - Bits of entropy + crack time estimate
 
 ### Productivity
-17. **Pomodoro** - Work/break modes with session tracking
-18. **Markdown** - Live markdown to HTML rendering
-19. **Scratchpad** - Memory-only notes (clears on refresh)
+29. **Pomodoro** - Work/break modes with session tracking (persisted)
+30. **Markdown** - Live markdown to HTML rendering
+31. **Scratchpad** - Memory-only notes (clears on refresh)
+32. **Checklist** - Memory-only task checklist
+33. **Standup** - Yesterday/today/blockers template
+34. **Snippet Pad** - Memory-only multi-tab code snippets
 
 ## Security Model
 
@@ -121,16 +153,18 @@ devkit/
 - Heartbeat mechanism detects crashed/abandoned tabs
 - "Take Over" button to reclaim access
 
+## Navigation Structure
+Tools are grouped into 7 categories in the nav bar:
+- **Encode**: JWT, JSON, JSON+, Base64, URL
+- **Generate**: ID, UUID, Pass, Lorem
+- **Convert**: Hash, Base, Time, Color, Unit
+- **Dev**: Regex, Regex+, SQL, Cron, Diff, JSON Diff
+- **Web**: CSS, cURL, HTML, Escape, CIDR
+- **Security**: Headers, CSP, Entropy
+- **Productivity**: Pomodoro, MD, Notes, Check, Standup, Snippets
+
 ## Keyboard Shortcuts
 - `Alt+1` through `Alt+0`: Switch between first 10 tools
-
-## Navigation Structure
-Tools are grouped into 5 categories in the nav:
-- **Encode**: JWT, JSON, Base64, URL
-- **Generate**: ID, UUID, Pass, Lorem
-- **Convert**: Hash, Time, Color, Unit
-- **Dev**: Regex, SQL, Cron, Diff
-- **Productivity**: Pomodoro, MD, Notes
 
 ## Development Guidelines
 - **Never add external dependencies** without explicit approval
