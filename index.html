@@ -57,6 +57,7 @@
             <button class="nav-btn" data-tool="cron">Cron</button>
             <button class="nav-btn" data-tool="diff">Diff</button>
             <button class="nav-btn" data-tool="diffjson">JSON Diff</button>
+            <button class="nav-btn" data-tool="mermaid">Mermaid</button>
           </div>
           <div class="nav-group">
             <span class="nav-group-label">Web</span>
@@ -1081,6 +1082,116 @@
         </div>
         <div id="diffjson-error" class="error-msg hidden"></div>
       </section>
+
+      <section id="tool-mermaid" class="tool">
+        <h2>Mermaid Diagram Builder</h2>
+        <div class="mermaid-container">
+          <div class="mermaid-type-section">
+            <label for="mermaid-type">Diagram Type</label>
+            <select id="mermaid-type">
+              <option value="flowchart">Flowchart</option>
+              <option value="sequence">Sequence Diagram</option>
+              <option value="class">Class Diagram</option>
+              <option value="state">State Diagram</option>
+              <option value="er">ER Diagram</option>
+              <option value="gantt">Gantt Chart</option>
+              <option value="pie">Pie Chart</option>
+            </select>
+          </div>
+          <div id="mermaid-flowchart-panel" class="mermaid-panel active">
+            <div class="mermaid-nodes-section">
+              <label>Nodes (one per line: id: label)</label>
+              <textarea id="mermaid-nodes" placeholder="A: Start&#10;B: Process Data&#10;C: Decision&#10;D: End" spellcheck="false"></textarea>
+            </div>
+            <div class="mermaid-edges-section">
+              <label>Connections (one per line: from --&gt; to)</label>
+              <textarea id="mermaid-edges" placeholder="A --&gt; B&#10;B --&gt; C&#10;C --&gt;|Yes| D&#10;C --&gt;|No| A" spellcheck="false"></textarea>
+            </div>
+            <div class="mermaid-options">
+              <div class="control-group">
+                <label for="mermaid-direction">Direction</label>
+                <select id="mermaid-direction">
+                  <option value="TD">Top to Bottom</option>
+                  <option value="LR">Left to Right</option>
+                  <option value="BT">Bottom to Top</option>
+                  <option value="RL">Right to Left</option>
+                </select>
+              </div>
+              <div class="control-group">
+                <label for="mermaid-shape">Node Shape</label>
+                <select id="mermaid-shape">
+                  <option value="rect">Rectangle [ ]</option>
+                  <option value="round">Rounded ( )</option>
+                  <option value="diamond">Diamond { }</option>
+                  <option value="circle">Circle (( ))</option>
+                  <option value="stadium">Stadium ([ ])</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div id="mermaid-sequence-panel" class="mermaid-panel">
+            <div class="mermaid-actors-section">
+              <label>Actors (one per line)</label>
+              <textarea id="mermaid-actors" placeholder="Alice&#10;Bob&#10;Server" spellcheck="false" style="min-height:60px"></textarea>
+            </div>
+            <div class="mermaid-messages-section">
+              <label>Messages (one per line: from -> to: message)</label>
+              <textarea id="mermaid-messages" placeholder="Alice -> Bob: Hello Bob&#10;Bob -> Server: Request data&#10;Server -->> Bob: Response&#10;Bob ->> Alice: Got it!" spellcheck="false" style="min-height:100px"></textarea>
+            </div>
+          </div>
+          <div id="mermaid-class-panel" class="mermaid-panel">
+            <div class="mermaid-classes-section">
+              <label>Classes (one per line: name: method1(), method2())</label>
+              <textarea id="mermaid-classes" placeholder="User: +login(), +logout()&#10;Admin: +manageUsers()&#10;Database: +query(), +connect()" spellcheck="false" style="min-height:80px"></textarea>
+            </div>
+            <div class="mermaid-relations-section">
+              <label>Relationships (one per line: from -- to: type)</label>
+              <textarea id="mermaid-relations" placeholder="User -- Admin: extends&#10;User -- Database: uses" spellcheck="false" style="min-height:60px"></textarea>
+            </div>
+          </div>
+          <div id="mermaid-state-panel" class="mermaid-panel">
+            <div class="mermaid-states-section">
+              <label>States (one per line: id: name)</label>
+              <textarea id="mermaid-states" placeholder="idle: Idle&#10;running: Running&#10;stopped: Stopped" spellcheck="false" style="min-height:60px"></textarea>
+            </div>
+            <div class="mermaid-transitions-section">
+              <label>Transitions (one per line: from --> to: event)</label>
+              <textarea id="mermaid-transitions" placeholder="idle --> running: Start&#10;running --> stopped: Stop&#10;stopped --> idle: Reset" spellcheck="false" style="min-height:60px"></textarea>
+            </div>
+          </div>
+          <div id="mermaid-er-panel" class="mermaid-panel">
+            <div class="mermaid-entities-section">
+              <label>Entities (one per line: name: field1 type, field2 type)</label>
+              <textarea id="mermaid-entities" placeholder="USER: id int PK, name string, email string&#10;ORDER: id int PK, user_id int FK, total float" spellcheck="false" style="min-height:80px"></textarea>
+            </div>
+            <div class="mermaid-er-relations-section">
+              <label>Relationships (one per line: entity1 -- entity2: relation)</label>
+              <textarea id="mermaid-er-relations" placeholder="USER ||--o{ ORDER: places" spellcheck="false" style="min-height:60px"></textarea>
+            </div>
+          </div>
+          <div id="mermaid-gantt-panel" class="mermaid-panel">
+            <div class="mermaid-gantt-section">
+              <label>Tasks (one per line: name: start date, duration)</label>
+              <textarea id="mermaid-gantt-tasks" placeholder="Design: 2024-01-01, 10d&#10;Development: 2024-01-11, 20d&#10;Testing: 2024-02-01, 10d&#10;Deployment: 2024-02-11, 5d" spellcheck="false" style="min-height:100px"></textarea>
+            </div>
+          </div>
+          <div id="mermaid-pie-panel" class="mermaid-panel">
+            <div class="mermaid-pie-section">
+              <label>Slices (one per line: label: value)</label>
+              <textarea id="mermaid-pie-slices" placeholder="Backend: 40&#10;Frontend: 30&#10;DevOps: 20&#10;Other: 10" spellcheck="false" style="min-height:100px"></textarea>
+            </div>
+          </div>
+          <div class="mermaid-output-section">
+            <div class="mermaid-controls">
+              <button id="mermaid-generate" class="btn-primary">Generate</button>
+              <button id="mermaid-copy" class="btn-secondary">Copy</button>
+              <button id="mermaid-clear" class="btn-danger">Clear</button>
+            </div>
+            <label>Mermaid Syntax</label>
+            <pre id="mermaid-output" class="output-box"><span class="placeholder">Mermaid syntax will appear here</span></pre>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer>
@@ -1125,6 +1236,7 @@
   <script src="js/snippet-pad.js"></script>
   <script src="js/regex-library.js"></script>
   <script src="js/json-diff.js"></script>
+  <script src="js/mermaid-builder.js"></script>
   <script src="js/app.js"></script>
   <script src="js/state-manager.js"></script>
 </body>

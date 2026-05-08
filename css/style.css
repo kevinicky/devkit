@@ -1351,5 +1351,20 @@ footer {
   .regexlib-pattern { display: block; font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-success); margin-bottom: 0.25rem; word-break: break-all; }
   .regexlib-desc { font-size: 0.8rem; color: var(--text-secondary); }
 
-  .diffjson-controls { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+.diffjson-controls { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+
+.mermaid-container { max-width: 900px; }
+.mermaid-type-section { margin-bottom: 1rem; }
+.mermaid-panel { display: none; }
+.mermaid-panel.active { display: block; }
+.mermaid-nodes-section, .mermaid-edges-section, .mermaid-actors-section, .mermaid-messages-section,
+.mermaid-classes-section, .mermaid-relations-section, .mermaid-states-section, .mermaid-transitions-section,
+.mermaid-entities-section, .mermaid-er-relations-section, .mermaid-gantt-section, .mermaid-pie-section { margin-bottom: 1rem; }
+.mermaid-nodes-section textarea, .mermaid-edges-section textarea, .mermaid-actors-section textarea,
+.mermaid-messages-section textarea, .mermaid-classes-section textarea, .mermaid-relations-section textarea,
+.mermaid-states-section textarea, .mermaid-transitions-section textarea, .mermaid-entities-section textarea,
+.mermaid-er-relations-section textarea, .mermaid-gantt-section textarea, .mermaid-pie-section textarea { min-height: 80px; }
+.mermaid-options { display: flex; gap: 1rem; margin-bottom: 1rem; }
+.mermaid-output-section { margin-top: 1rem; }
+.mermaid-controls { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
 }

@@ -19,7 +19,10 @@
       'baseconv-input', 'cidr-input', 'curl-url', 'curl-headers', 'curl-body',
       'htmlentity-input', 'escape-input', 'secheaders-input', 'passent-input',
       'checklist-input', 'standup-yesterday', 'standup-today', 'standup-blockers',
-      'diffjson-original', 'diffjson-modified'];
+      'diffjson-original', 'diffjson-modified',
+      'mermaid-nodes', 'mermaid-edges', 'mermaid-actors', 'mermaid-messages',
+      'mermaid-classes', 'mermaid-relations', 'mermaid-states', 'mermaid-transitions',
+      'mermaid-entities', 'mermaid-er-relations', 'mermaid-gantt-tasks', 'mermaid-pie-slices'];
 
     textareas.forEach(id => {
       const val = load(id);
@@ -27,7 +30,7 @@
       if (val !== null && el) el.value = val;
     });
 
-    const selects = ['idgen-country', 'lorem-type', 'unit-category-select', 'uuid-format', 'escape-type', 'curl-method'];
+    const selects = ['idgen-country', 'lorem-type', 'unit-category-select', 'uuid-format', 'escape-type', 'curl-method', 'mermaid-type'];
     selects.forEach(id => {
       const val = load(id);
       const el = document.getElementById(id);
