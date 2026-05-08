@@ -23,60 +23,64 @@
         <h1>devkit</h1>
       </div>
       <nav id="main-nav">
-        <div class="nav-group">
-          <span class="nav-group-label">Encode</span>
-          <button class="nav-btn active" data-tool="jwt">JWT</button>
-          <button class="nav-btn" data-tool="json">JSON</button>
-          <button class="nav-btn" data-tool="jsonenc">JSON+</button>
-          <button class="nav-btn" data-tool="base64">Base64</button>
-          <button class="nav-btn" data-tool="url">URL</button>
+        <div class="nav-row">
+          <div class="nav-group">
+            <span class="nav-group-label">Encode</span>
+            <button class="nav-btn active" data-tool="jwt">JWT</button>
+            <button class="nav-btn" data-tool="json">JSON</button>
+            <button class="nav-btn" data-tool="jsonenc">JSON+</button>
+            <button class="nav-btn" data-tool="base64">Base64</button>
+            <button class="nav-btn" data-tool="url">URL</button>
+          </div>
+          <div class="nav-group">
+            <span class="nav-group-label">Generate</span>
+            <button class="nav-btn" data-tool="idgen">ID</button>
+            <button class="nav-btn" data-tool="uuid">UUID</button>
+            <button class="nav-btn" data-tool="password">Pass</button>
+            <button class="nav-btn" data-tool="lorem">Lorem</button>
+          </div>
+          <div class="nav-group">
+            <span class="nav-group-label">Convert</span>
+            <button class="nav-btn" data-tool="hash">Hash</button>
+            <button class="nav-btn" data-tool="baseconv">Base</button>
+            <button class="nav-btn" data-tool="timestamp">Time</button>
+            <button class="nav-btn" data-tool="color">Color</button>
+            <button class="nav-btn" data-tool="unit">Unit</button>
+          </div>
         </div>
-        <div class="nav-group">
-          <span class="nav-group-label">Generate</span>
-          <button class="nav-btn" data-tool="idgen">ID</button>
-          <button class="nav-btn" data-tool="uuid">UUID</button>
-          <button class="nav-btn" data-tool="password">Pass</button>
-          <button class="nav-btn" data-tool="lorem">Lorem</button>
-        </div>
-        <div class="nav-group">
-          <span class="nav-group-label">Convert</span>
-          <button class="nav-btn" data-tool="hash">Hash</button>
-          <button class="nav-btn" data-tool="baseconv">Base</button>
-          <button class="nav-btn" data-tool="timestamp">Time</button>
-          <button class="nav-btn" data-tool="color">Color</button>
-          <button class="nav-btn" data-tool="unit">Unit</button>
-        </div>
-        <div class="nav-group">
-          <span class="nav-group-label">Dev</span>
-          <button class="nav-btn" data-tool="regex">Regex</button>
-          <button class="nav-btn" data-tool="regexlib">Regex+</button>
-          <button class="nav-btn" data-tool="sql">SQL</button>
-          <button class="nav-btn" data-tool="cron">Cron</button>
-          <button class="nav-btn" data-tool="diff">Diff</button>
-          <button class="nav-btn" data-tool="diffjson">JSON Diff</button>
-        </div>
-        <div class="nav-group">
-          <span class="nav-group-label">Web</span>
-          <button class="nav-btn" data-tool="cssgen">CSS</button>
-          <button class="nav-btn" data-tool="curlgen">cURL</button>
-          <button class="nav-btn" data-tool="htmlentity">HTML</button>
-          <button class="nav-btn" data-tool="escape">Escape</button>
-          <button class="nav-btn" data-tool="cidr">CIDR</button>
-        </div>
-        <div class="nav-group">
-          <span class="nav-group-label">Security</span>
-          <button class="nav-btn" data-tool="secheaders">Headers</button>
-          <button class="nav-btn" data-tool="cspb">CSP</button>
-          <button class="nav-btn" data-tool="passent">Entropy</button>
-        </div>
-        <div class="nav-group">
-          <span class="nav-group-label">Productivity</span>
-          <button class="nav-btn" data-tool="pomodoro">Pomodoro</button>
-          <button class="nav-btn" data-tool="markdown">MD</button>
-          <button class="nav-btn" data-tool="notes">Notes</button>
-          <button class="nav-btn" data-tool="checklist">Check</button>
-          <button class="nav-btn" data-tool="standup">Standup</button>
-          <button class="nav-btn" data-tool="snippets">Snippets</button>
+        <div class="nav-row">
+          <div class="nav-group">
+            <span class="nav-group-label">Dev</span>
+            <button class="nav-btn" data-tool="regex">Regex</button>
+            <button class="nav-btn" data-tool="regexlib">Regex+</button>
+            <button class="nav-btn" data-tool="sql">SQL</button>
+            <button class="nav-btn" data-tool="cron">Cron</button>
+            <button class="nav-btn" data-tool="diff">Diff</button>
+            <button class="nav-btn" data-tool="diffjson">JSON Diff</button>
+          </div>
+          <div class="nav-group">
+            <span class="nav-group-label">Web</span>
+            <button class="nav-btn" data-tool="cssgen">CSS</button>
+            <button class="nav-btn" data-tool="curlgen">cURL</button>
+            <button class="nav-btn" data-tool="htmlentity">HTML</button>
+            <button class="nav-btn" data-tool="escape">Escape</button>
+            <button class="nav-btn" data-tool="cidr">CIDR</button>
+          </div>
+          <div class="nav-group">
+            <span class="nav-group-label">Security</span>
+            <button class="nav-btn" data-tool="secheaders">Headers</button>
+            <button class="nav-btn" data-tool="cspb">CSP</button>
+            <button class="nav-btn" data-tool="passent">Entropy</button>
+          </div>
+          <div class="nav-group">
+            <span class="nav-group-label">Productivity</span>
+            <button class="nav-btn" data-tool="pomodoro">Pomodoro</button>
+            <button class="nav-btn" data-tool="markdown">MD</button>
+            <button class="nav-btn" data-tool="notes">Notes</button>
+            <button class="nav-btn" data-tool="checklist">Check</button>
+            <button class="nav-btn" data-tool="standup">Standup</button>
+            <button class="nav-btn" data-tool="snippets">Snippets</button>
+          </div>
         </div>
       </nav>
       <div class="security-badge">
