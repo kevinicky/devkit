@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>devkit</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="tab-blocked" class="hidden">
+    <div class="blocked-content">
+      <h1>Already Open</h1>
+      <p>devkit is already open in another tab. Close that tab or refresh this one to continue.</p>
+      <button id="take-over-btn">Take Over This Tab</button>
+    </div>
+  </div>
+
+  <div id="app" class="hidden">
+    <header>
+      <div class="logo">
+        <span class="logo-icon">⚡</span>
+        <h1>devkit</h1>
+      </div>
+      <nav id="main-nav">
+        <button class="nav-btn active" data-tool="jwt">JWT</button>
+        <button class="nav-btn" data-tool="idgen">ID Gen</button>
+        <button class="nav-btn" data-tool="json">JSON</button>
+        <button class="nav-btn" data-tool="regex">Regex</button>
+        <button class="nav-btn" data-tool="pomodoro">Pomodoro</button>
+        <button class="nav-btn" data-tool="diff">Diff</button>
+      </nav>
+      <div class="security-badge">
+        <span class="badge-icon">🔒</span>
+        <span>Local Only</span>
+      </div>
+    </header>
+
+    <main>
+      <section id="tool-jwt" class="tool active">
+        <h2>JWT Decoder</h2>
+        <div class="tool-layout">
+          <div class="input-section">
+            <label for="jwt-input">Paste JWT Token</label>
+            <textarea id="jwt-input" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." spellcheck="false"></textarea>
+          </div>
+          <div class="output-section">
+            <div class="output-group">
+              <label>Header</label>
+              <pre id="jwt-header" class="output-box"><span class="placeholder">Header will appear here</span></pre>
+            </div>
+            <div class="output-group">
+              <label>Payload</label>
+              <pre id="jwt-payload" class="output-box"><span class="placeholder">Payload will appear here</span></pre>
+            </div>
+            <div class="output-group">
+              <label>Signature Status</label>
+              <div id="jwt-signature" class="output-box"><span class="placeholder">Signature verification status</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tool-idgen" class="tool">
+        <h2>ID Generator</h2>
+        <div class="idgen-controls">
+          <div class="control-group">
+            <label for="idgen-country">Country</label>
+            <select id="idgen-country">
+              <option value="id">🇮🇩 Indonesia (KTP)</option>
+              <option value="th">🇹🇭 Thailand</option>
+              <option value="ph">🇵🇭 Philippines</option>
+              <option value="sg">🇸🇬 Singapore (NRIC)</option>
+              <option value="my">🇲🇾 Malaysia (NRIC)</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label for="idgen-count">Count</label>
+            <input type="number" id="idgen-count" value="1" min="1" max="100">
+          </div>
+          <button id="idgen-generate" class="btn-primary">Generate</button>
+        </div>
+        <div class="idgen-results">
+          <div class="results-header">
+            <label>Generated IDs</label>
+            <button id="idgen-copy" class="btn-secondary">Copy All</button>
+          </div>
+          <pre id="idgen-output" class="output-box"><span class="placeholder">Generated IDs will appear here</span></pre>
+        </div>
+      </section>
+
+      <section id="tool-json" class="tool">
+        <h2>JSON Tools</h2>
+        <div class="json-controls">
+          <button id="json-prettify" class="btn-primary">Prettify</button>
+          <button id="json-minify" class="btn-secondary">Minify</button>
+          <button id="json-encode" class="btn-secondary">Encode</button>
+          <button id="json-decode" class="btn-secondary">Decode</button>
+          <button id="json-copy" class="btn-secondary">Copy</button>
+          <button id="json-clear" class="btn-danger">Clear</button>
+        </div>
+        <div class="tool-layout">
+          <div class="input-section">
+            <label for="json-input">Input</label>
+            <textarea id="json-input" placeholder='{"key": "value"}' spellcheck="false"></textarea>
+          </div>
+          <div class="output-section">
+            <label>Output</label>
+            <pre id="json-output" class="output-box"><span class="placeholder">Output will appear here</span></pre>
+          </div>
+        </div>
+        <div id="json-error" class="error-msg hidden"></div>
+      </section>
+
+      <section id="tool-regex" class="tool">
+        <h2>Regex Tester</h2>
+        <div class="regex-controls">
+          <div class="regex-pattern-group">
+            <span class="regex-slash">/</span>
+            <input type="text" id="regex-pattern" placeholder="pattern" spellcheck="false">
+            <span class="regex-slash">/</span>
+            <input type="text" id="regex-flags" placeholder="gi" value="g" class="regex-flags-input">
+          </div>
+        </div>
+        <div class="tool-layout">
+          <div class="input-section">
+            <label for="regex-test-string">Test String</label>
+            <textarea id="regex-test-string" placeholder="Enter text to test against your regex..." spellcheck="false"></textarea>
+          </div>
+          <div class="output-section">
+            <label>Matches</label>
+            <pre id="regex-matches" class="output-box"><span class="placeholder">Matches will appear here</span></pre>
+          </div>
+        </div>
+        <div id="regex-error" class="error-msg hidden"></div>
+      </section>
+
+      <section id="tool-pomodoro" class="tool">
+        <h2>Pomodoro Timer</h2>
+        <div class="pomodoro-container">
+          <div class="pomodoro-modes">
+            <button class="mode-btn active" data-mode="work" data-time="25">Work (25m)</button>
+            <button class="mode-btn" data-mode="short" data-time="5">Short Break (5m)</button>
+            <button class="mode-btn" data-mode="long" data-time="15">Long Break (15m)</button>
+          </div>
+          <div class="timer-display">
+            <div id="timer-time" class="timer-time">25:00</div>
+            <div id="timer-mode" class="timer-mode">Work</div>
+          </div>
+          <div class="timer-controls">
+            <button id="timer-start" class="btn-primary">Start</button>
+            <button id="timer-reset" class="btn-secondary">Reset</button>
+          </div>
+          <div class="pomodoro-stats">
+            <div class="stat">
+              <span id="pomodoro-count" class="stat-value">0</span>
+              <span class="stat-label">Sessions</span>
+            </div>
+            <div class="stat">
+              <span id="pomodoro-total" class="stat-value">0m</span>
+              <span class="stat-label">Total Time</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tool-diff" class="tool">
+        <h2>Text Diff</h2>
+        <div class="diff-controls">
+          <button id="diff-compare" class="btn-primary">Compare</button>
+          <button id="diff-clear" class="btn-danger">Clear</button>
+        </div>
+        <div class="diff-layout">
+          <div class="diff-inputs">
+            <div class="input-section">
+              <label for="diff-original">Original</label>
+              <textarea id="diff-original" placeholder="Paste original text..." spellcheck="false"></textarea>
+            </div>
+            <div class="input-section">
+              <label for="diff-modified">Modified</label>
+              <textarea id="diff-modified" placeholder="Paste modified text..." spellcheck="false"></textarea>
+            </div>
+          </div>
+          <div class="output-section">
+            <label>Diff Result</label>
+            <pre id="diff-output" class="output-box"><span class="placeholder">Diff result will appear here</span></pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span class="security-note">🔒 All processing happens locally. No data is stored or transmitted.</span>
+    </footer>
+  </div>
+
+  <script src="js/security.js"></script>
+  <script src="js/jwt.js"></script>
+  <script src="js/id-generator.js"></script>
+  <script src="js/json-tools.js"></script>
+  <script src="js/regex-tester.js"></script>
+  <script src="js/pomodoro.js"></script>
+  <script src="js/text-diff.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
