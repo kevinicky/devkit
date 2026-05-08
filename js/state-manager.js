@@ -4,24 +4,22 @@
   const PREFIX = 'dk-';
 
   function save(key, value) {
-    try {
-      sessionStorage.setItem(PREFIX + key, typeof value === 'string' ? value : JSON.stringify(value));
-    } catch (e) {}
+    try { sessionStorage.setItem(PREFIX + key, typeof value === 'string' ? value : JSON.stringify(value)); } catch (e) {}
   }
 
   function load(key) {
-    try {
-      return sessionStorage.getItem(PREFIX + key);
-    } catch (e) {
-      return null;
-    }
+    try { return sessionStorage.getItem(PREFIX + key); } catch (e) { return null; }
   }
 
   function restoreAll() {
     const textareas = ['jwt-input', 'json-input', 'jsonenc-input', 'regex-pattern', 'regex-flags', 'regex-test-string',
       'diff-original', 'diff-modified', 'hash-input', 'base64-input', 'url-input',
       'markdown-input', 'sql-input', 'cron-input', 'jwtgen-header', 'jwtgen-payload', 'jwtgen-secret',
-      'notes-input', 'timestamp-input', 'color-hex', 'color-rgb', 'color-hsl'];
+      'notes-input', 'timestamp-input', 'color-hex', 'color-rgb', 'color-hsl',
+      'baseconv-input', 'cidr-input', 'curl-url', 'curl-headers', 'curl-body',
+      'htmlentity-input', 'escape-input', 'secheaders-input', 'passent-input',
+      'checklist-input', 'standup-yesterday', 'standup-today', 'standup-blockers',
+      'diffjson-original', 'diffjson-modified'];
 
     textareas.forEach(id => {
       const val = load(id);
@@ -29,7 +27,7 @@
       if (val !== null && el) el.value = val;
     });
 
-    const selects = ['idgen-country', 'lorem-type', 'unit-category-select', 'uuid-format'];
+    const selects = ['idgen-country', 'lorem-type', 'unit-category-select', 'uuid-format', 'escape-type', 'curl-method'];
     selects.forEach(id => {
       const val = load(id);
       const el = document.getElementById(id);
@@ -45,10 +43,8 @@
 
     const activeTool = load('active-tool');
     if (activeTool) {
-      const item = document.querySelector('.nav-dropdown-item[data-tool="' + activeTool + '"]');
-      if (item) {
-        item.click();
-      }
+      const btn = document.querySelector('.nav-btn[data-tool="' + activeTool + '"]');
+      if (btn) btn.click();
     }
   }
 
@@ -61,8 +57,8 @@
       }
     });
 
-    document.querySelectorAll('.nav-dropdown-item').forEach(item => {
-      item.addEventListener('click', () => save('active-tool', item.dataset.tool));
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => save('active-tool', btn.dataset.tool));
     });
   }
 
