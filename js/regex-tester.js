@@ -20,7 +20,10 @@
             index: match.index,
             groups: match.slice(1)
           });
-          if (!regex.global) break;
+          if (match[0].length === 0) {
+            regex.lastIndex++;
+            if (regex.lastIndex > testString.length) break;
+          }
         }
       } else {
         match = regex.exec(testString);
@@ -42,9 +45,31 @@
   function highlightMatches(pattern, flags, testString) {
     try {
       const regex = new RegExp(pattern, flags.includes('g') ? flags : flags + 'g');
-      return escapeHtml(testString).replace(regex, (match) => {
-        return '<span class="regex-match-highlight">' + match + '</span>';
-      });
+      const matches = [];
+      let match;
+
+      while ((match = regex.exec(testString)) !== null) {
+        matches.push({ start: match.index, end: match.index + match[0].length });
+        if (match[0].length === 0) {
+          regex.lastIndex++;
+          if (regex.lastIndex > testString.length) break;
+        }
+      }
+
+      if (matches.length === 0) return escapeHtml(testString);
+
+      let result = '';
+      let lastIndex = 0;
+
+      for (let i = 0; i < matches.length; i++) {
+        const { start, end } = matches[i];
+        result += escapeHtml(testString.slice(lastIndex, start));
+        result += '<span class="regex-match-highlight">' + escapeHtml(testString.slice(start, end)) + '</span>';
+        lastIndex = end;
+      }
+
+      result += escapeHtml(testString.slice(lastIndex));
+      return result;
     } catch (e) {
       return escapeHtml(testString);
     }
