@@ -247,11 +247,15 @@
       <section id="tool-regex" class="tool">
         <h2>Regex Tester</h2>
         <div class="regex-controls">
-          <div class="regex-pattern-group">
-            <span class="regex-slash">/</span>
-            <input type="text" id="regex-pattern" placeholder="pattern" spellcheck="false">
-            <span class="regex-slash">/</span>
-            <input type="text" id="regex-flags" placeholder="gi" value="g" class="regex-flags-input">
+          <div class="regex-input-row">
+            <div class="control-group">
+              <label for="regex-pattern">Pattern</label>
+              <input type="text" id="regex-pattern" placeholder="e.g. \d{3}-\d{4}" spellcheck="false">
+            </div>
+            <div class="control-group">
+              <label for="regex-flags">Flags</label>
+              <input type="text" id="regex-flags" placeholder="gi" value="g" class="regex-flags-input">
+            </div>
           </div>
         </div>
         <div class="tool-layout">
